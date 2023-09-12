@@ -19,7 +19,7 @@ Widget FillButton(
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
           backgroundColor: Colors.black,
           elevation: 0,
-          minimumSize: const Size(50, 50),
+          minimumSize: const Size(50, 57),
           foregroundColor: Colors.white
         ),
         child: child);

@@ -1,13 +1,14 @@
+import 'package:cdio_web/api/model/Product.dart';
 import 'package:cdio_web/components/button/button.dart';
 import 'package:cdio_web/components/button/clickable.dart';
 import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/extensions/router_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:iconsax/iconsax.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key});
+  const ProductCard(this.product, {super.key});
+
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class ProductCard extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
-                  'https://img.fruugo.com/product/9/78/204181789_max.jpg',
+                  product.listProductImage?.first.imageUrl ?? '',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -46,40 +47,21 @@ class ProductCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'T-Shirt',
-                      style: TextStyle(
+                    Text(
+                      product.name ?? '',
+                      style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                           fontStyle: FontStyle.italic),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     SpacerV(size: 5),
-                    Row(
-                      children: [
-                        RatingBarIndicator(
-                          itemSize: 18,
-                          rating: 5,
-                          itemBuilder: (BuildContext context, int index) {
-                            return const Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            );
-                          },
-                        ),
-                        SpacerH(size: 5),
-                        const Text(
-                          '5.0',
-                          style: TextStyle(fontSize: 16),
-                        )
-                      ],
-                    ),
-                    SpacerV(size: 5),
-                    const Text(
-                      '\$18,00',
-                      style: TextStyle(
-                          fontSize: 30,
+                    Text(
+                      '\$${product.price ?? 0}',
+                      style: const TextStyle(
+                          fontSize: 25,
                           fontStyle: FontStyle.italic,
-                          color: Colors.redAccent,
                           fontWeight: FontWeight.w100),
                     )
                   ],
@@ -87,21 +69,17 @@ class ProductCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Row(
-                children: [
-                  Expanded(child: Button(child: const Text('ADD TO CART'), onTap: (){})),
-                  SpacerH(size: 10),
-                  Button(child: const Icon(Iconsax.heart), onTap: (){})
-                ],
-              ),
-            ),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: SizedBox(
+                    width: double.infinity,
+                    child: Button(
+                        child: const Text('ADD TO CART'), onTap: () {}))),
             SpacerV(),
           ],
         ),
       ),
       onClick: () {
-        context.push('/product');
+        context.push('/product',{'id': 4});
       },
     );
   }

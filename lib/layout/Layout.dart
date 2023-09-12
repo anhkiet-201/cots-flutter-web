@@ -2,6 +2,7 @@ import 'package:cdio_web/components/footer/footer.dart';
 import 'package:cdio_web/components/footer/mobile-footer.dart';
 import 'package:cdio_web/components/header/header.dart';
 import 'package:cdio_web/components/header/mobile-header.dart';
+import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/layout/ResponsiveLayout.dart';
 import 'package:flutter/material.dart';
 
@@ -10,21 +11,23 @@ class Layout extends StatelessWidget {
       {super.key,
       required this.children,
       this.enableExpanded = false,
-      this.banner}) {
+      this.banner,
+      this.title}) {
     child = null;
   }
 
-  Layout.single({super.key, this.enableExpanded = false, this.banner, required this.child});
+  Layout.single({super.key, this.enableExpanded = false, this.banner, required this.child, this.title});
 
   late List<Widget> children;
   late final Widget? child;
   final bool enableExpanded;
   final Widget? banner;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xfff9fafb),
       body: ResponsiveLayout(
         builder: (isMobile) {
           return CustomScrollView(
@@ -33,7 +36,29 @@ class Layout extends StatelessWidget {
               SliverToBoxAdapter(
                   child: child ?? Column(
                 crossAxisAlignment: CrossAxisAlignment.center ,
-                children: [...children, _footer(isMobile)],
+                children: [
+                  if(title != null)
+                    Container(
+                      padding: const EdgeInsets.only(left: 200),
+                      height: 75,
+                      width: double.infinity,
+                      color: Colors.white.withOpacity(0.8),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          '$title',
+                          style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ),
+                    ),
+                  SpacerV(size: 100),
+                  ...children,
+                  SpacerV(size: 100),
+                  _footer(isMobile)
+                ],
               )),
             ],
           );

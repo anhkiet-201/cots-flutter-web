@@ -1,12 +1,15 @@
 import 'dart:math';
 
+import 'package:cdio_web/api/model/Product.dart';
 import 'package:cdio_web/components/button/button.dart';
 import 'package:cdio_web/components/icons/icons-define.dart';
 import 'package:cdio_web/components/icons/icons.dart';
 import 'package:cdio_web/components/product/product-card.dart';
 import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/layout/Layout.dart';
+import 'package:cdio_web/utils/data.dart';
 import 'package:flutter/material.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,136 +19,84 @@ class HomePage extends StatelessWidget {
     return Layout(
       enableExpanded: true,
       children: [
-        SpacerV(size: 100),
         Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(
               maxWidth: 1360
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Column(
                   children: [
-                    Column(
-                      children: [
-                        IconNet(IconsType.salad, size: const Size(50, 50)),
-                        const Text('Accessories')
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        IconNet(IconsType.bird, size: const Size(50, 50)),
-                        const Text('Bird')
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        IconNet(IconsType.dog, size: const Size(50, 50)),
-                        const Text('Dog')
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        IconNet(IconsType.cat, size: const Size(50, 50)),
-                        const Text('Cat')
-                      ],
-                    ),
+                    IconNet(IconsType.salad, size: const Size(50, 50)),
+                    const Text('Accessories')
                   ],
                 ),
-                SpacerV(size: 100),
-                _title('Pet clothing'),
-                // const Divider(height: 1,color: Colors.grey, indent: 50, endIndent: 50,),
-                SpacerV(),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50),
-                  child: Center(
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: 20,
-                      runSpacing: 20,
-                      children: [
-                        ProductCard(),
-                        ProductCard(),
-                        ProductCard(),
-                        ProductCard(),
-                      ],
-                    ),
-                  ),
-                )
+                Column(
+                  children: [
+                    IconNet(IconsType.bird, size: const Size(50, 50)),
+                    const Text('Bird')
+                  ],
+                ),
+                Column(
+                  children: [
+                    IconNet(IconsType.dog, size: const Size(50, 50)),
+                    const Text('Dog')
+                  ],
+                ),
+                Column(
+                  children: [
+                    IconNet(IconsType.cat, size: const Size(50, 50)),
+                    const Text('Cat')
+                  ],
+                ),
               ],
             ),
           ),
         ),
         SpacerV(size: 100),
-        Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-                maxWidth: 1360
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _title('Pet foodies'),
-                // const Divider(height: 1,color: Colors.grey, indent: 50, endIndent: 50,),
-                SpacerV(),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50),
-                  child: Center(
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: 20,
-                      runSpacing: 20,
-                      children: [
-                        ProductCard(),
-                        ProductCard(),
-                        ProductCard(),
-                        ProductCard(),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
+        _item(title: 'Pet cloths', items: petCloth),
+        SpacerV(size: 100),
+        _item(title: 'Pet foodies', items: petFood),
         SpacerV(size: 100),
         _midBanner(),
         SpacerV(size: 100),
-        Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-                maxWidth: 1360
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _title('Best selling'),
-                // const Divider(height: 1,color: Colors.grey, indent: 50, endIndent: 50,),
-                SpacerV(),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50),
-                  child: Center(
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: 20,
-                      runSpacing: 20,
-                      children: [
-                        ProductCard(),
-                        ProductCard(),
-                        ProductCard(),
-                        ProductCard(),
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
+        _item(title: 'Pet foodies', items: petCloth),
       ],
     );
+  }
+
+  Center _item({
+    required String title,
+    required List<Product> items
+}) {
+    return Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+              maxWidth: 1360
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _title(title),
+              // const Divider(height: 1,color: Colors.grey, indent: 50, endIndent: 50,),
+              SpacerV(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: Center(
+                  child: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 20,
+                    runSpacing: 20,
+                    children: items.map((e) => ProductCard(e)).toList(),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
   }
 }
 

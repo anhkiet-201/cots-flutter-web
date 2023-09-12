@@ -47,7 +47,8 @@ class _MobileHeaderState extends State<MobileHeader> {
           title: Text(
             'Pet shop',
             style: TextStyle(
-                color: widget.enableExpanded ? iconColor : Colors.black
+                color: widget.enableExpanded ? iconColor : Colors.black,
+                fontWeight: FontWeight.bold
             ),
           ),
           centerTitle: true,

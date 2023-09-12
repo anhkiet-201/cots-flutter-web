@@ -1,10 +1,15 @@
 import 'package:cdio_web/api/model/BaseResponseModel.dart';
+import 'package:http/http.dart';
 
 extension HandlingValue on Future {
-  Future<T> onValue<T extends BaseResponseModel>(
-      {required Function(T) value, required T Function() type}) async {
-    final result = await this;
-    final object = type().fromJson(result) as T;
+  Future<BaseResponse> onResponseObject() async {
+    final object = await this;
     return object;
   }
+
+  Future<List<BaseResponse>> onResponseList() async {
+    final list = await this;
+    return (list as List<BaseResponse>);
+  }
+
 }

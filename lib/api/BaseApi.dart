@@ -14,9 +14,9 @@ class BaseApi {
   BaseApi();
 
   final String _baseUrl =
-      'http://ec2-18-141-25-99.ap-southeast-1.compute.amazonaws.com:8080/api';
+      'http://localhost:8080';
 
-  Future<BaseResponse> get(
+  Future<dynamic> get(
       {required String path, Map<String, dynamic>? params, Map<String, String>? header}) async {
     final jwt = LocalStorageService.jwt;
     if (jwt != null) {
@@ -35,7 +35,7 @@ class BaseApi {
     return _utf8JsonDecode(response.bodyBytes);
   }
 
-  Future<BaseResponse> post({required String path, Object? body, Object? rawBody, Map<String, dynamic>? params, Map<String, String>? header}) async {
+  Future<dynamic> post({required String path, Object? body, Object? rawBody, Map<String, dynamic>? params, Map<String, String>? header}) async {
     final jwt = LocalStorageService.jwt;
     if (jwt != null) {
       _headers.addEntries([MapEntry('Authorization', jwt)]);
@@ -53,7 +53,7 @@ class BaseApi {
     return _utf8JsonDecode(response.bodyBytes);
   }
 
-  Future<BaseResponse> put({required String path, Object? body, Object? rawBody, Map<String, dynamic>? params, Map<String, String>? header}) async {
+  Future<dynamic> put({required String path, Object? body, Object? rawBody, Map<String, dynamic>? params, Map<String, String>? header}) async {
     final jwt = LocalStorageService.jwt;
     if (jwt != null) {
       _headers.addEntries([MapEntry('Authorization', jwt)]);
@@ -71,7 +71,7 @@ class BaseApi {
     return _utf8JsonDecode(response.bodyBytes);
   }
 
-  Future<BaseResponse> delete({required String path, Object? body, Object? rawBody, Map<String, dynamic>? params, Map<String, String>? header}) async {
+  Future<dynamic> delete({required String path, Object? body, Object? rawBody, Map<String, dynamic>? params, Map<String, String>? header}) async {
     final jwt = LocalStorageService.jwt;
     if (jwt != null) {
       _headers.addEntries([MapEntry('Authorization', jwt)]);
@@ -89,7 +89,7 @@ class BaseApi {
     return _utf8JsonDecode(response.bodyBytes);
   }
 
-  BaseResponse _utf8JsonDecode(Uint8List value) => jsonDecode(utf8.decode(value));
+  String _utf8JsonDecode(Uint8List value) => jsonDecode(utf8.decode(value));
 
   String _paramsConvert(Map<String, dynamic>? params) {
     final paramsList = <String>[];

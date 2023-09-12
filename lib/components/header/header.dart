@@ -1,8 +1,10 @@
 import 'package:cdio_web/components/button/clickable.dart';
+import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/extensions/router_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:iconsax/iconsax.dart';
 
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -57,12 +59,15 @@ class _HeaderState extends State<Header> {
               ],
             ),
           ) : null,
-
           pinned: true,
-
           actions: [
             IconButton(onPressed: () {
-              _googleSignIn.signIn();
+              context.push('/cart');
+            }, icon: Icon(Iconsax.shopping_bag, color: widget.enableExpanded ? iconColor : Colors.black,)),
+            SpacerH(),
+            IconButton(onPressed: () {
+              //_googleSignIn.signIn();
+              context.push('/login');
             }, icon: Icon(Icons.login_rounded, color: widget.enableExpanded ? iconColor : Colors.black,)),
             const SizedBox(width: 50,)
           ],
@@ -70,7 +75,8 @@ class _HeaderState extends State<Header> {
             child: Text(
               'Pet shop',
               style: TextStyle(
-              color: widget.enableExpanded ? iconColor : Colors.black
+              color: widget.enableExpanded ? iconColor : Colors.black,
+                fontWeight: FontWeight.bold
               ),
             ),
             onClick: () {

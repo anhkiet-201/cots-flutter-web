@@ -1,7 +1,10 @@
 import 'package:cdio_web/components/button/button.dart';
 import 'package:cdio_web/components/image/BaseImage.dart';
 import 'package:cdio_web/components/image/image_album.dart';
+import 'package:cdio_web/components/product/product-card.dart';
+import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/layout/Layout.dart';
+import 'package:cdio_web/utils/data.dart';
 import 'package:cdio_web/utils/utils.dart';
 import 'package:flutter/material.dart';
 
@@ -15,20 +18,13 @@ class Product extends StatefulWidget {
 class _ProductState extends State<Product> {
   @override
   Widget build(BuildContext context) {
-    print(parameters);
+    final product = petCloth.first;
     return Layout(
       children: [
-        const SizedBox(height: 100,),
         Wrap(
           children: [
-            const ImageAlbum(
-                [
-                  'https://i.pinimg.com/736x/ec/2d/01/ec2d0137634e8c4f599644ef7fe7303b.jpg',
-                  'https://i.pinimg.com/originals/6e/5f/41/6e5f41cfc54de2e38c519591fc73a144.jpg',
-                  'https://i.pinimg.com/736x/a5/31/63/a53163e5b3c188d56633488c61b34141.jpg',
-                  'https://i.pinimg.com/originals/be/87/17/be87171cfe1012bc5f5ccbc66ad19d33.jpg',
-                  'https://i.pinimg.com/736x/76/ba/58/76ba58ed438ef908512218fd4da629d4.jpg'
-                ]
+            ImageAlbum(
+                product.listProductImage?.map((e) => e.imageUrl ?? '').toList() ?? []
             ),
             Container(
               padding: const EdgeInsets.all(50),
@@ -36,37 +32,37 @@ class _ProductState extends State<Product> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     height: 100,
                     child: SelectableText(
-                        'Product name',
-                      style: TextStyle(
-                        fontSize: 40,
+                        '${product.name}',
+                      style: const TextStyle(
+                        fontSize: 30,
                         fontWeight: FontWeight.w600
                       ),
                       maxLines: 2,
                     ),
                   ),
-                  const SelectableText(
-                    '\$100.0',
-                    style: TextStyle(
+                  SelectableText(
+                    '\$${product.price ?? 0}',
+                    style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w600,
-                      color: Colors.redAccent
                     ),
                   ),
+                  SpacerV(),
                   Container(
                     constraints: const BoxConstraints(
                       minHeight: 100
                     ),
-                    child: const SelectableText(
-                      'A product description provides consumers with practical information about a product’s benefits, measurements and specifications, composition, use cases and more. Detailed product descriptions are a critical part of selling online. Product descriptions can be found on product pages, typically below a product’s name and price. They’re usually no longer than 300 words.',
-                      style: TextStyle(
-
+                    child: SelectableText(
+                      '${product.description}',
+                      style: const TextStyle(
+                        fontStyle: FontStyle.italic
                       ),
                     ),
                   ),
-                  const Divider(color: Colors.black, thickness: 0.5,),
+                  SpacerV(size: 50),
                   FillButton(child: const SizedBox(
                     width: double.infinity,
                     child: Center(
@@ -75,6 +71,7 @@ class _ProductState extends State<Product> {
                       ),
                     ),
                   ), onTap: (){}),
+                  SpacerV(),
                   // Row(
                   //   children: [
                   //     Expanded(
@@ -99,8 +96,76 @@ class _ProductState extends State<Product> {
               ),
             )
           ],
-        )
+        ),
+        SpacerV(size: 100),
+        const Text(
+          'Related products'
+        ),
+        const SizedBox(
+          width: 500,
+          child: Text(
+            'You might also want to check out these products.',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.w600
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        SpacerV(size: 100),
+        Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+                maxWidth: 1360
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // const Divider(height: 1,color: Colors.grey, indent: 50, endIndent: 50,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50),
+                  child: Center(
+                    child: Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 20,
+                      runSpacing: 20,
+                      children: petCloth.map((e) => ProductCard(e)).toList(),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
       ],
+    );
+  }
+
+  Widget _title(String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      child: Row(
+        children: [
+          Text(
+            text,
+            style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold
+            ),
+          ),
+          const Spacer(),
+          Button(
+              child: Row(
+                children: [
+                  const Text('SHOP ALL'),
+                  SpacerH(size: 5),
+                  const Icon(Icons.arrow_right_alt_rounded)
+                ],
+              ),
+              onTap: (){}
+          )
+        ],
+      ),
     );
   }
 }
