@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:cdio_web/api/model/User.dart';
 import 'package:cdio_web/extensions/router_extension.dart';
 import 'package:cdio_web/layout/ResponsiveLayout.dart';

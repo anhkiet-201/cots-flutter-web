@@ -14,15 +14,19 @@ class AuthService {
     ],
   );
 
-  Future<BaseResponseModel> dang_ky(
+  Future<User?> dang_ky(
       {required String name,
       required String email,
       required String password}) async {
-
-    final result = await _api.post(
+    final response = await _api.post(
         path: '/dang-ky',
         body: {"name": name, "email": email, "password": password});
-    return BaseResponseModel.fromJson(result);
+    final baseResponse = response.baseResponse;
+    if (!baseResponse.result || baseResponse.data == null) return null;
+    LocalStorageService.jwt = response['token'];
+    LocalStorageService.shared
+        .saveValue(key: LocalStorageKey.jwtKey, value: LocalStorageService.jwt);
+    return User.fromJson(baseResponse.data!);
   }
 
   Future<User?> dang_nhap(
