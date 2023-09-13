@@ -41,9 +41,17 @@ class AuthService {
     await LocalStorageService.shared.drop(key: LocalStorageKey.jwtKey);
   }
 
-  // Future<BaseResponseModel> google_login() async {
-  //   final googleAcc = await _googleSignIn.signIn();
-  //
-  //   // final result = await _api.post(path: '/google-login', body: {"token": token});
-  // }
+  Future<User?> google_login() async {
+    final googleAcc = await _googleSignIn.signIn();
+    if(googleAcc == null) return null;
+    final header = await googleAcc.authHeaders;
+    final token = header['Authorization'];
+    if(token == null) return null;
+    final response = await _api.post(path: '/google-login', header: {"token": token.replaceAll('Bearer ', '')});
+    final baseResponse = response.baseResponse;
+    if(!baseResponse.result || baseResponse.data == null) return null;
+    LocalStorageService.jwt = response['token'];
+    LocalStorageService.shared.saveValue(key: LocalStorageKey.jwtKey, value: LocalStorageService.jwt);
+    return User.fromJson(baseResponse.data!);
+  }
 }

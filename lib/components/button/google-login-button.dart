@@ -1,14 +1,10 @@
+import 'package:cdio_web/api/services/AuthService.dart';
 import 'package:cdio_web/components/button/button.dart';
 import 'package:cdio_web/components/image/BaseImage.dart';
 import 'package:cdio_web/components/space.dart';
+import 'package:cdio_web/extensions/router_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
-final _googleSignIn = GoogleSignIn(
-  scopes: [
-    'email',
-  ],
-);
 class GoogleLoginButton extends StatelessWidget {
   const GoogleLoginButton({super.key});
 
@@ -32,14 +28,18 @@ class GoogleLoginButton extends StatelessWidget {
         ),
       ),
       onTap: () {
-        _googleSignIn.signIn()
+        AuthService.shared.google_login()
             .then((value) {
-          // final googleAcc = await _googleSignIn.signIn();
-          print(value?.authHeaders);
+          if(value == null) return;
+          context.app.user = value;
+          Navigator.popUntil(context, (p){
+            return p.settings.name == '/';
+          });
+        }).onError((error, stackTrace) {
+          debugPrintStack(label: 'Login error', stackTrace: stackTrace);
         });
       }
     );
   }
 }
-
 
