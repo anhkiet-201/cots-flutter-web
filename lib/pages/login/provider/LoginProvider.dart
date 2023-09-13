@@ -1,6 +1,8 @@
+import 'package:cdio_web/api/model/ErrorResponse.dart';
 import 'package:cdio_web/api/model/User.dart';
 import 'package:cdio_web/api/services/AuthService.dart';
 import 'package:cdio_web/extensions/router_extension.dart';
+import 'package:cdio_web/extensions/snack_bar.dart';
 import 'package:cdio_web/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -23,23 +25,25 @@ class LoginProvider with ChangeNotifier {
     required String password
 }) async {
     if(!validateEmail(email)) {
-      print('inValidateEmail');
+      context.showSnackBar('Please enter a valid email', type: SnackBarType.error);
       return;
     }
     if(!validatePassword(password)) {
-      print('inValidateEmail');
+      context.showSnackBar('''Please enter a valid password.\nMinimum 8 characters including uppercase letters, lowercase letters, special letters.
+      ''', type: SnackBarType.error);
       return;
     }
     isLoading = true;
     await _service.dang_nhap(email: email, password: password)
+    .onError((ErrorResponse error, stackTrace) {
+      context.showSnackBar(error.error?.first ?? 'Error', type: SnackBarType.error);
+    })
     .then((value) {
       if(value == null) return;
       context.app.user = value;
       Navigator.popUntil(context, (p){
         return p.settings.name == '/';
       });
-    }).onError((error, stackTrace) {
-      debugPrintStack(label: 'Login error', stackTrace: stackTrace);
     }).whenComplete(() => isLoading = false);
   }
 }

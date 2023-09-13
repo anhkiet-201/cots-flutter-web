@@ -28,8 +28,7 @@ class BaseApi {
         Uri.parse('$_baseUrl$path${_paramsConvert(params)}'),
         headers: _headers);
     if (response.statusCode >= 400) {
-      throw Exception(
-          ErrorResponse(response.statusCode, response.reasonPhrase, _utf8JsonDecode(response.bodyBytes)['errors']));
+      throw ErrorResponse(response.statusCode, response.reasonPhrase, _utf8JsonDecode(response.bodyBytes)['errors']);
     }
     return _utf8JsonDecode(response.bodyBytes);
   }
@@ -46,8 +45,7 @@ class BaseApi {
         Uri.parse('$_baseUrl$path${_paramsConvert(params)}'),
         body: rawBody ?? (body != null ? jsonEncode(body) : body), headers: _headers);
     if (response.statusCode >= 400) {
-      throw Exception(
-          ErrorResponse(response.statusCode, response.reasonPhrase, _utf8JsonDecode(response.bodyBytes)['errors']));
+      throw ErrorResponse(response.statusCode, response.reasonPhrase, _utf8JsonDecode(response.bodyBytes)['errors']);
     }
     return _utf8JsonDecode(response.bodyBytes);
   }
@@ -64,8 +62,7 @@ class BaseApi {
         Uri.parse('$_baseUrl$path${_paramsConvert(params)}'),
         body: rawBody ?? (body != null ? jsonEncode(body) : body), headers: _headers);
     if (response.statusCode >= 400) {
-      throw Exception(
-          ErrorResponse(response.statusCode, response.reasonPhrase, _utf8JsonDecode(response.bodyBytes)['errors']));
+      throw ErrorResponse(response.statusCode, response.reasonPhrase, _utf8JsonDecode(response.bodyBytes)['errors']);
     }
     return _utf8JsonDecode(response.bodyBytes);
   }
@@ -82,8 +79,7 @@ class BaseApi {
         Uri.parse('$_baseUrl$path${_paramsConvert(params)}'),
         body: rawBody ?? (body != null ? jsonEncode(body) : body), headers: _headers);
     if (response.statusCode >= 400) {
-      throw Exception(
-          ErrorResponse(response.statusCode, response.reasonPhrase, _utf8JsonDecode(response.bodyBytes)['errors']));
+      throw ErrorResponse(response.statusCode, response.reasonPhrase, _utf8JsonDecode(response.bodyBytes)['errors']);
     }
     return _utf8JsonDecode(response.bodyBytes);
   }
