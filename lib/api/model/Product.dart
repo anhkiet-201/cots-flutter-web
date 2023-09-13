@@ -11,7 +11,9 @@ class Product {
   String? seoDescription;
   String? seoTitle;
   String? seoAlias;
+  double? totalPriceDiscount;
   List<ListProductImage>? listProductImage;
+  // List<Null>? listDiscount;
 
   Product(
       {this.id,
@@ -26,7 +28,10 @@ class Product {
         this.seoDescription,
         this.seoTitle,
         this.seoAlias,
-        this.listProductImage});
+        this.totalPriceDiscount,
+        this.listProductImage,
+        // this.listDiscount
+      });
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -41,12 +46,19 @@ class Product {
     seoDescription = json['seoDescription'];
     seoTitle = json['seoTitle'];
     seoAlias = json['seoAlias'];
+    totalPriceDiscount = json['totalPriceDiscount'];
     if (json['listProductImage'] != null) {
       listProductImage = <ListProductImage>[];
       json['listProductImage'].forEach((v) {
         listProductImage!.add(ListProductImage.fromJson(v));
       });
     }
+    // if (json['listDiscount'] != null) {
+    //   listDiscount = <Null>[];
+    //   json['listDiscount'].forEach((v) {
+    //     listDiscount!.add(new Null.fromJson(v));
+    //   });
+    // }
   }
 
   Map<String, dynamic> toJson() {
@@ -63,10 +75,14 @@ class Product {
     data['seoDescription'] = seoDescription;
     data['seoTitle'] = seoTitle;
     data['seoAlias'] = seoAlias;
+    data['totalPriceDiscount'] = totalPriceDiscount;
     if (listProductImage != null) {
       data['listProductImage'] =
           listProductImage!.map((v) => v.toJson()).toList();
     }
+    // if (this.listDiscount != null) {
+    //   data['listDiscount'] = this.listDiscount!.map((v) => v.toJson()).toList();
+    // }
     return data;
   }
 }

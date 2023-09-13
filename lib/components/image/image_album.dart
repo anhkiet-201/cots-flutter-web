@@ -1,9 +1,11 @@
 import 'package:cdio_web/components/image/BaseImage.dart';
 import 'package:flutter/material.dart';
+import 'package:skeletons/skeletons.dart';
 
 class ImageAlbum extends StatefulWidget {
-  const ImageAlbum(this.images, {super.key});
+  const ImageAlbum(this.images, {super.key, this.isLoading = false});
   final List<String> images;
+  final bool isLoading;
 
   @override
   State<ImageAlbum> createState() => _ImageAlbumState();
@@ -26,7 +28,7 @@ class _ImageAlbumState extends State<ImageAlbum> {
             ),
             child: AspectRatio(
               aspectRatio: 1,
-              child: BaseImage(
+              child: widget.isLoading ? const SkeletonAvatar() : BaseImage(
                 widget.images[_selectedIndex],
                 fit: BoxFit.cover,
               ),
@@ -39,8 +41,17 @@ class _ImageAlbumState extends State<ImageAlbum> {
             ),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: widget.images.length,
+              itemCount: widget.isLoading ? null : widget.images.length,
               itemBuilder: (_, index) {
+                if(widget.isLoading) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                    child: SizedBox(
+                        width: 110,
+                        child: SkeletonAvatar()
+                    ),
+                  );
+                }
                 return GestureDetector(
                   child: Container(
                     margin: const EdgeInsets.all(10),
@@ -54,6 +65,7 @@ class _ImageAlbumState extends State<ImageAlbum> {
                     child: BaseImage(
                       widget.images[index],
                       width: 110,
+                      height: 110,
                     ),
                   ),
                   onTap: () => setState(() {
