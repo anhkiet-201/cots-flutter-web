@@ -19,9 +19,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
-
-
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,8 +38,12 @@ class _LoginState extends State<Login> {
                 style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
               ),
               SpacerV(),
-              const EmailField(),
-              const PasswordField(),
+              EmailField(
+                controller: _emailController,
+              ),
+              PasswordField(
+                controller: _passwordController,
+              ),
               _loginButton(),
               SpacerV(),
               const Row(
@@ -104,7 +107,10 @@ extension on _LoginState {
     return FillButton(
         child: const Text('Login'),
         onTap: () {
-          context.read<LoginProvider>().login();
+          context.read<LoginProvider>().login(
+            email: _emailController.text,
+            password: _passwordController.text
+          );
         });
   }
 }

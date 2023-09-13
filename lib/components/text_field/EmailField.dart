@@ -1,3 +1,4 @@
+import 'package:cdio_web/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'CustomTextField.dart';
 
@@ -24,7 +25,7 @@ class _EmailFieldState extends State<EmailField> {
       onChange: (value){
         if(value.isNotEmpty){
           _visiable = true;
-          if(isValidEmail(value)){
+          if(validateEmail(value)){
             _isValid = true;
           }else{
             _isValid = false;
@@ -42,11 +43,4 @@ class _EmailFieldState extends State<EmailField> {
       ),
     );
   }
-
-  bool isValidEmail(String email) {
-    return RegExp(
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(email);
-  }
-
 }

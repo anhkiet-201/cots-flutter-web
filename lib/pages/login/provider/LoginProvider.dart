@@ -1,6 +1,7 @@
 import 'package:cdio_web/api/model/User.dart';
 import 'package:cdio_web/api/services/AuthService.dart';
 import 'package:cdio_web/extensions/router_extension.dart';
+import 'package:cdio_web/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoginProvider with ChangeNotifier {
@@ -17,9 +18,20 @@ class LoginProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> login() async {
+  Future<void> login({
+    required String email,
+    required String password
+}) async {
+    if(!validateEmail(email)) {
+      print('inValidateEmail');
+      return;
+    }
+    if(!validatePassword(password)) {
+      print('inValidateEmail');
+      return;
+    }
     isLoading = true;
-    await _service.dang_nhap(email: 'igg.anhkiet1@gmail.com', password: '12345678A@a')
+    await _service.dang_nhap(email: email, password: password)
     .then((value) {
       if(value == null) return;
       context.app.user = value;
