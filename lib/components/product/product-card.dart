@@ -56,7 +56,7 @@ class ProductCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    SpacerV(size: 5),
+                    SpacerV(5),
                     Text(
                       '\$${product.price ?? 0}',
                       style: const TextStyle(

@@ -7,9 +7,6 @@ class LocalStorageService {
   final _securityStorage = SecurityStorage.shared;
 
   static String? jwt;
-  static Future initJwt() async {
-    jwt = await shared.getValue(LocalStorageKey.jwtKey);
-  }
 
   Future<String?> getValue(LocalStorageKey key) async {
     final result = await _securityStorage.get(key: key.value);
@@ -33,15 +30,20 @@ class LocalStorageService {
     final object = type().fromJsonStorage(json) as T;
     return object;
   }
+
+  Future<void> drop({required LocalStorageKey key}) async {
+    await _securityStorage.drop(key: key.value);
+  }
 }
 
 enum LocalStorageKey{
-  jwtKey('jwt_key');
+  jwtKey('jwt_key'),
+  userKey('user_key');
   final String value;
   const LocalStorageKey(this.value);
 }
 
-abstract class StorageObject {
+abstract mixin class StorageObject {
   Map<String, dynamic> toJson();
   StorageObject fromJsonStorage(Map<String, dynamic> json);
 }

@@ -55,13 +55,13 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-        SpacerV(size: 100),
+        SpacerV(100),
         _item(title: 'Pet cloths', items: petCloth),
-        SpacerV(size: 100),
+        SpacerV(100),
         _item(title: 'Pet foodies', items: petFood),
-        SpacerV(size: 100),
+        SpacerV(100),
         _midBanner(),
-        SpacerV(size: 100),
+        SpacerV(100),
         _item(title: 'Pet foodies', items: petCloth),
       ],
     );
@@ -118,7 +118,7 @@ extension on HomePage {
               child: Row(
                 children: [
                   const Text('SHOP ALL'),
-                  SpacerH(size: 5),
+                  SpacerH(5),
                   const Icon(Icons.arrow_right_alt_rounded)
                 ],
               ),

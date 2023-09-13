@@ -56,15 +56,15 @@ class OrderItem extends StatelessWidget {
       ),
       children: [
         _line(),
-        SpacerV(size: 50),
+        SpacerV(50),
         ...petCloth.map((e) => _item(e)).toList(),
-        SpacerV(size: 50),
+        SpacerV(50),
         _line(),
-        SpacerV(size: 50),
+        SpacerV(50),
         _info(),
-        SpacerV(size: 50),
+        SpacerV(50),
         _line(),
-        SpacerV(size: 50),
+        SpacerV(50),
         const Text(
           'Need help?',
           style: TextStyle(
@@ -72,7 +72,7 @@ class OrderItem extends StatelessWidget {
             fontWeight: FontWeight.bold
           ),
         ),
-        SpacerV(size: 10),
+        SpacerV(10),
         const Text(
           'Contact us',
           style: TextStyle(
@@ -161,28 +161,28 @@ class OrderItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _infoTitle('Delivery'),
-              SpacerV(size: 10),
+              SpacerV(10),
               const Text(
                 'Anh Kiet',
                 style: TextStyle(
                     fontSize: 14
                 ),
               ),
-              SpacerV(size: 5),
+              SpacerV(5),
               const Text(
                 'Igg.anhkiet1@gmail.com',
                 style: TextStyle(
                     fontSize: 14
                 ),
               ),
-              SpacerV(size: 5),
+              SpacerV(5),
               const Text(
                 '0839874646',
                 style: TextStyle(
                     fontSize: 14
                 ),
               ),
-              SpacerV(size: 20),
+              SpacerV(20),
               const Text(
                   'Address',
                 style: TextStyle(
@@ -190,35 +190,35 @@ class OrderItem extends StatelessWidget {
                   fontWeight: FontWeight.w500
                 ),
               ),
-              SpacerV(size: 10),
+              SpacerV(10),
               const Text(
                 'Province - Da Nang',
                 style: TextStyle(
                   fontSize: 14
                 ),
               ),
-              SpacerV(size: 5),
+              SpacerV(5),
               const Text(
                 'District - Thanh Khe Tay',
                 style: TextStyle(
                     fontSize: 14
                 ),
               ),
-              SpacerV(size: 5),
+              SpacerV(5),
               const Text(
                 'Ward - Thanh Khe',
                 style: TextStyle(
                     fontSize: 14
                 ),
               ),
-              SpacerV(size: 5),
+              SpacerV(5),
               const Text(
                 'Street - 110 Nguyen Thi Thap',
                 style: TextStyle(
                     fontSize: 14
                 ),
               ),
-              SpacerV(size: 20),
+              SpacerV(20),
               const Text(
                 'Delivery method',
                 style: TextStyle(
@@ -226,7 +226,7 @@ class OrderItem extends StatelessWidget {
                     fontWeight: FontWeight.w500
                 ),
               ),
-              SpacerV(size: 10),
+              SpacerV(10),
               const Text(
                 'Payment via Momo',
                 style: TextStyle(
@@ -241,7 +241,7 @@ class OrderItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _infoTitle('Order Summary'),
-              SpacerV(size: 20),
+              SpacerV(20),
               const Row(
                 children: [
                   Text(
@@ -261,7 +261,7 @@ class OrderItem extends StatelessWidget {
                   ),
                 ],
               ),
-              SpacerV(size: 10),
+              SpacerV(10),
               const Row(
                 children: [
                   Text(
@@ -279,9 +279,9 @@ class OrderItem extends StatelessWidget {
                   ),
                 ],
               ),
-              SpacerV(size: 20),
+              SpacerV(20),
               _line(),
-              SpacerV(size: 20),
+              SpacerV(20),
               const Row(
                 children: [
                   Text(

@@ -4,7 +4,7 @@ import 'package:cdio_web/components/space.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-GoogleSignIn _googleSignIn = GoogleSignIn(
+final _googleSignIn = GoogleSignIn(
   scopes: [
     'email',
   ],
@@ -19,7 +19,7 @@ class GoogleLoginButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SpacerH(size: 10),
+            SpacerH(10),
             const BaseImage(
               'http://pngimg.com/uploads/google/google_PNG19635.png',
               width: 24,
@@ -32,8 +32,14 @@ class GoogleLoginButton extends StatelessWidget {
         ),
       ),
       onTap: () {
-        _googleSignIn.signIn();
+        _googleSignIn.signIn()
+            .then((value) {
+          // final googleAcc = await _googleSignIn.signIn();
+          print(value?.authHeaders);
+        });
       }
     );
   }
 }
+
+

@@ -43,6 +43,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   google_sign_in: ^6.1.5
   skeletons: ^0.0.3
+  url_strategy: ^0.2.0
 
 dev_dependencies:
   flutter_test:

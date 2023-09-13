@@ -1,8 +1,10 @@
 import 'package:cdio_web/app.dart';
-import 'package:cdio_web/utils/local_storage_service.dart';
 import 'package:flutter/material.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
-  await LocalStorageService.initJwt();
-  runApp(const AppDelegate());
+  setPathUrlStrategy();
+  final app = App();
+  await app.initApp();
+  runApp(AppDelegate(app));
 }

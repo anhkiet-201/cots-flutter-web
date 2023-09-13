@@ -57,7 +57,7 @@ class ProductCartItem extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                              const Icon(Iconsax.trash, size: 12,),
-                            SpacerH(size: 5),
+                            SpacerH(5),
                             Text(
                               'Remove',
                               style: TextStyle(

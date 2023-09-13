@@ -37,7 +37,7 @@ class _CartState extends State<Cart> {
                     'Shopping bag',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SpacerV(size: 30),
+                  SpacerV(30),
                   ...petCloth.map((e) => ProductCartItem(e)).toList()
                 ],
               ),
@@ -121,7 +121,7 @@ class _CartState extends State<Cart> {
                       //     )
                       //   ],
                       // ),
-                      SpacerV(size: 25),
+                      SpacerV(25),
                       SizedBox(
                           width: double.infinity,
                           child: FillButton(
@@ -132,7 +132,7 @@ class _CartState extends State<Cart> {
                     ],
                   ),
                 ),
-                // SpacerV(size: 25),
+                // SpacerV(25),
                 // Container(
                 //   color: Colors.white,
                 //   padding: const EdgeInsets.all(20),
@@ -146,7 +146,7 @@ class _CartState extends State<Cart> {
                 //         style: TextStyle(
                 //             fontSize: 14, fontWeight: FontWeight.bold),
                 //       ),
-                //       SpacerV(size: 25),
+                //       SpacerV(25),
                 //       Row(
                 //         children: [
                 //           Expanded(
@@ -161,7 +161,7 @@ class _CartState extends State<Cart> {
                 //               ),
                 //             ),
                 //           ),
-                //           SpacerH(size: 10),
+                //           SpacerH(10),
                 //           FillButton(child: const Text('APPLY'), onTap: () {})
                 //         ],
                 //       )
@@ -172,7 +172,7 @@ class _CartState extends State<Cart> {
             )
           ],
         ),
-        SpacerV(size: 100),
+        SpacerV(100),
         SizedBox(
           height: 400,
           width: double.infinity,

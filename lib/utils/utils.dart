@@ -5,8 +5,8 @@ Map<String, String> get parameters {
   return Uri.parse(href?.replaceFirst('/#', '') ?? '').queryParameters;
 }
 
-void printDebug(Object? object) {
+void printDebug(Object? object, {String? label}) {
   if(kDebugMode) {
-    print(object);
+    print('${label != null ? '$label :' : ''} $object');
   }
 }

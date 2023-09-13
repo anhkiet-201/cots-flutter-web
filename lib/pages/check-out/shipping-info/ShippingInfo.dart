@@ -26,11 +26,11 @@ class _ShippingInfoState extends State<ShippingInfo> {
           ExpansionTile(
             title: TitleExpansionTile(number: 1, label: 'Shipping address'),
             children: [
-              SpacerV(size: 30),
+              SpacerV(30),
               BaseTextField(
                   label: 'Email'
               ),
-              SpacerV(size: 10),
+              SpacerV(10),
               Row(
                 children: [
                   Expanded(
@@ -38,7 +38,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                         label: 'First name'
                     ),
                   ),
-                  SpacerH(size: 10),
+                  SpacerH(10),
                   Expanded(
                     child: BaseTextField(
                         label: 'Last name'
@@ -46,11 +46,11 @@ class _ShippingInfoState extends State<ShippingInfo> {
                   ),
                 ],
               ),
-              SpacerV(size: 10),
+              SpacerV(10),
               BaseTextField(
                   label: 'Phone number'
               ),
-              SpacerV(size: 10),
+              SpacerV(10),
               Row(
                 children: [
                   Expanded(
@@ -58,19 +58,19 @@ class _ShippingInfoState extends State<ShippingInfo> {
                         label: 'Provice/City'
                     ),
                   ),
-                  SpacerH(size: 10),
+                  SpacerH(10),
                   Expanded(
                     child: BaseTextField(
                         label: 'District'
                     ),
                   ),
-                  SpacerH(size: 10),
+                  SpacerH(10),
                   Expanded(
                     child: BaseTextField(
                         label: 'Ward'
                     ),
                   ),
-                  SpacerH(size: 10),
+                  SpacerH(10),
                   Expanded(
                     child: BaseTextField(
                         label: 'Street'
@@ -78,7 +78,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
                   ),
                 ],
               ),
-              SpacerV(size: 10),
+              SpacerV(10),
             ],
           ),
         ],

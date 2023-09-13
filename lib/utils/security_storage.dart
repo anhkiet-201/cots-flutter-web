@@ -8,21 +8,28 @@ class SecurityStorage {
     await _storage.write(
         key: key,
         value: value,
-      aOptions: _androidOptions,
-      webOptions: _webOptions
-    );
+        aOptions: _androidOptions,
+        webOptions: _webOptions);
   }
 
   Future<String?> get({required String key}) async {
-    final result = await _storage.read(
-        key: key,
-        aOptions: _androidOptions);
+    final result = await _storage.read(key: key, aOptions: _androidOptions);
     return result;
   }
 
   AndroidOptions get _androidOptions => const AndroidOptions(
-    encryptedSharedPreferences: true,
-  );
+        encryptedSharedPreferences: true,
+      );
 
   WebOptions get _webOptions => const WebOptions();
+
+  WindowsOptions get _winOptions => const WindowsOptions();
+
+  Future<void> drop({required String key}) async {
+    await _storage.delete(
+        key: key,
+        aOptions: _androidOptions,
+        webOptions: _webOptions,
+        wOptions: _winOptions);
+  }
 }

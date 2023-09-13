@@ -62,7 +62,7 @@ class _ProductState extends State<Product> {
                       ),
                     ),
                   ),
-                  SpacerV(size: 50),
+                  SpacerV(50),
                   FillButton(child: const SizedBox(
                     width: double.infinity,
                     child: Center(
@@ -97,7 +97,7 @@ class _ProductState extends State<Product> {
             )
           ],
         ),
-        SpacerV(size: 100),
+        SpacerV(100),
         const Text(
           'Related products'
         ),
@@ -112,7 +112,7 @@ class _ProductState extends State<Product> {
             textAlign: TextAlign.center,
           ),
         ),
-        SpacerV(size: 100),
+        SpacerV(100),
         Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(
@@ -158,7 +158,7 @@ class _ProductState extends State<Product> {
               child: Row(
                 children: [
                   const Text('SHOP ALL'),
-                  SpacerH(size: 5),
+                  SpacerH(5),
                   const Icon(Icons.arrow_right_alt_rounded)
                 ],
               ),

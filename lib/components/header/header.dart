@@ -1,3 +1,5 @@
+import 'package:cdio_web/api/services/AuthService.dart';
+import 'package:cdio_web/app.dart';
 import 'package:cdio_web/components/button/clickable.dart';
 import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/extensions/router_extension.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -61,14 +64,12 @@ class _HeaderState extends State<Header> {
           ) : null,
           pinned: true,
           actions: [
-            IconButton(onPressed: () {
-              context.push('/cart');
-            }, icon: Icon(Iconsax.shopping_bag, color: widget.enableExpanded ? iconColor : Colors.black,)),
+            if(context.app.user != null)
+              IconButton(onPressed: () {
+                context.push('/cart');
+              }, icon: Icon(Iconsax.shopping_bag, color: widget.enableExpanded ? iconColor : Colors.black,)),
             SpacerH(),
-            IconButton(onPressed: () {
-              //_googleSignIn.signIn();
-              context.push('/login');
-            }, icon: Icon(Icons.login_rounded, color: widget.enableExpanded ? iconColor : Colors.black,)),
+            _profile(iconColor),
             const SizedBox(width: 50,)
           ],
           title: ClickAble(
@@ -86,6 +87,43 @@ class _HeaderState extends State<Header> {
           centerTitle: true,
         );
       },
+    );
+  }
+
+  Widget _profile(Color? iconColor) {
+    context.watch<App>();
+    if(context.app.user == null) {
+      return IconButton(onPressed: () {
+        //_googleSignIn.signIn();
+        context.push('/login');
+      }, icon: Icon(Icons.login_rounded, color: widget.enableExpanded ? iconColor : Colors.black,));
+    }
+    return Row(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Image.network(
+            context.app.user?.imageUrl ?? 'https://cafefcdn.com/thumb_w/640/203337114487263232/2022/3/3/photo1646280815645-1646280816151764748403.jpg',
+            width: 25,
+            height: 25,
+            fit: BoxFit.cover,
+          ),
+        ),
+        const SizedBox(width: 20,),
+        ClickAble(
+          child: Text(
+            'Logout',
+            style: TextStyle(
+                color: widget.enableExpanded ? iconColor : Colors.black,
+              fontSize: 12
+            ),
+          ),
+          onClick: () {
+            AuthService.shared.dang_xuat();
+            context.app.user = null;
+          },
+        )
+      ],
     );
   }
 }

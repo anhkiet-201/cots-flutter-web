@@ -31,7 +31,7 @@ class _CheckOutState extends State<CheckOut> {
             Column(
               children: [
                 const ShippingInfo(),
-                SpacerV(size: 25),
+                SpacerV(25),
                 const PaymentSelection(),
               ],
             ),
@@ -116,7 +116,7 @@ class _CheckOutState extends State<CheckOut> {
                       //     )
                       //   ],
                       // ),
-                      SpacerV(size: 25),
+                      SpacerV(25),
                       SizedBox(
                           width: double.infinity,
                           child: FillButton(child: const Text('CONTINUE'), onTap: (){
@@ -140,7 +140,7 @@ class _CheckOutState extends State<CheckOut> {
                     ],
                   ),
                 ),
-                // SpacerV(size: 25),
+                // SpacerV(25),
                 // Container(
                 //   color: Colors.white,
                 //   padding: const EdgeInsets.all(20),
@@ -189,7 +189,7 @@ class _CheckOutState extends State<CheckOut> {
             )
           ],
         ),
-        SpacerV(size: 100),
+        SpacerV(100),
         SizedBox(
           height: 400,
           width: double.infinity,
