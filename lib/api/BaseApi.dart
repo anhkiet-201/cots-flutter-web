@@ -19,7 +19,7 @@ class BaseApi {
       {required String path, Map<String, dynamic>? params, Map<String, String>? header}) async {
     final jwt = LocalStorageService.jwt;
     if (jwt != null) {
-      _headers.addEntries([MapEntry('Authorization', jwt)]);
+      _headers.addEntries([MapEntry('Authorization', 'Bearer $jwt')]);
     }
     if(header != null) {
       _headers.addAll(header);
@@ -36,7 +36,7 @@ class BaseApi {
   Future<Map<String, dynamic>> post({required String path, Object? body, Object? rawBody, Map<String, dynamic>? params, Map<String, String>? header}) async {
     final jwt = LocalStorageService.jwt;
     if (jwt != null) {
-      _headers.addEntries([MapEntry('Authorization', jwt)]);
+      _headers.addEntries([MapEntry('Authorization', 'Bearer $jwt')]);
     }
     if(header != null) {
       _headers.addAll(header);
@@ -53,7 +53,7 @@ class BaseApi {
   Future<Map<String, dynamic>> put({required String path, Object? body, Object? rawBody, Map<String, dynamic>? params, Map<String, String>? header}) async {
     final jwt = LocalStorageService.jwt;
     if (jwt != null) {
-      _headers.addEntries([MapEntry('Authorization', jwt)]);
+      _headers.addEntries([MapEntry('Authorization', 'Bearer $jwt')]);
     }
     if(header != null) {
       _headers.addAll(header);
@@ -70,7 +70,7 @@ class BaseApi {
   Future<Map<String, dynamic>> delete({required String path, Object? body, Object? rawBody, Map<String, dynamic>? params, Map<String, String>? header}) async {
     final jwt = LocalStorageService.jwt;
     if (jwt != null) {
-      _headers.addEntries([MapEntry('Authorization', jwt)]);
+      _headers.addEntries([MapEntry('Authorization', 'Bearer $jwt')]);
     }
     if(header != null) {
       _headers.addAll(header);

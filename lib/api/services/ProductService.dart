@@ -25,10 +25,12 @@ class ProductService {
     final pageResponse = response.pageableResponse;
     return pageResponse.to(type: Product.new);
   }
-//   Future<Product?> get_product({required int id}) async {
-//     final response = await _api.get(
-//       path: 'api/Product/$id'
-//     );
-//     return Product.fromJson(response);
-//   }
+
+  Future<Product?> get_product({required int id}) async {
+    final response = await _api.get(
+      path: '/api/Product/$id'
+    );
+    if(response.baseResponse.data == null) return null;
+    return Product.fromJson(response.baseResponse.data!);
+  }
 }

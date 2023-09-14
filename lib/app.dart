@@ -12,8 +12,13 @@ class AppDelegate extends StatelessWidget {
   final App app;
   @override
   Widget build(BuildContext appContext) {
-    return ChangeNotifierProvider(
-      create: (context) => app,
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => app,
+        ),
+      ],
       builder: (context, _) => MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -23,7 +28,7 @@ class AppDelegate extends StatelessWidget {
         onGenerateRoute: (settings) {
           return routing(settings, context);
         },
-      ),
+      )
     );
   }
 }

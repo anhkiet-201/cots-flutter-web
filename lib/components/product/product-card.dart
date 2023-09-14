@@ -1,4 +1,5 @@
 import 'package:cdio_web/api/model/Product.dart';
+import 'package:cdio_web/components/button/add-to-cart-button.dart';
 import 'package:cdio_web/components/button/button.dart';
 import 'package:cdio_web/components/button/clickable.dart';
 import 'package:cdio_web/components/space.dart';
@@ -70,16 +71,14 @@ class ProductCard extends StatelessWidget {
             ),
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: SizedBox(
-                    width: double.infinity,
-                    child: Button(
-                        child: const Text('ADD TO CART'), onTap: () {}))),
+                child: AddToCartButton(product.id)
+            ),
             SpacerV(),
           ],
         ),
       ),
       onClick: () {
-        context.push('/product',{'id': 4});
+        context.push('/product',{'id': product.id});
       },
     );
   }

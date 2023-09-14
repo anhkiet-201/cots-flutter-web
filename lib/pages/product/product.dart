@@ -1,9 +1,12 @@
-import 'package:cdio_web/components/button/button.dart';
+import 'package:cdio_web/api/model/Product.dart' as ProductModel;
+import 'package:cdio_web/api/services/ProductService.dart';
+import 'package:cdio_web/components/button/add-to-cart-button.dart';
 import 'package:cdio_web/components/image/image_album.dart';
 import 'package:cdio_web/components/product/product-card.dart';
 import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/layout/Layout.dart';
 import 'package:cdio_web/utils/data.dart';
+import 'package:cdio_web/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -15,13 +18,14 @@ class Product extends StatefulWidget {
 }
 
 class _ProductState extends State<Product> {
-  var isLoading = false;
-
-  double get width => MediaQuery.of(context).size.width;
+  var isLoading = true;
+  ProductModel.Product? _product;
 
   @override
   Widget build(BuildContext context) {
-    final product = petCloth.first;
+    if(_product == null) {
+      _fetch();
+    }
     return Layout(
       children: [
         Wrap(
@@ -30,7 +34,7 @@ class _ProductState extends State<Product> {
           children: [
             ImageAlbum(
               isLoading: isLoading,
-                product.listProductImage?.map((e) => e.imageUrl ?? '').toList() ?? []
+                _product?.listProductImage?.map((e) => e.imageUrl ?? '').toList() ?? []
             ),
             SizedBox(
               width: 720,
@@ -40,7 +44,7 @@ class _ProductState extends State<Product> {
                   SizedBox(
                     height: 100,
                     child: isLoading ? SkeletonParagraph() : SelectableText(
-                        '${product.name}',
+                        '${_product?.name}',
                       style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w600
@@ -56,7 +60,7 @@ class _ProductState extends State<Product> {
                       ),
                     ),
                   ) :SelectableText(
-                    '\$${product.price ?? 0}',
+                    '\$${_product?.price ?? 0}',
                     style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w600,
@@ -72,7 +76,7 @@ class _ProductState extends State<Product> {
                       minHeight: 100
                     ),
                     child: SelectableText(
-                      '${product.description}',
+                      '${_product?.description}',
                       style: const TextStyle(
                         fontStyle: FontStyle.italic
                       ),
@@ -83,14 +87,7 @@ class _ProductState extends State<Product> {
                     style: SkeletonAvatarStyle(
                       width: double.infinity
                     ),
-                  ) : FillButton(child: const SizedBox(
-                    width: double.infinity,
-                    child: Center(
-                      child: Text(
-                        'ADD TO CART',
-                      ),
-                    ),
-                  ), onTap: (){}),
+                  ) : AddToCartButton(_product?.id),
                   SpacerV(),
                   // Row(
                   //   children: [
@@ -162,4 +159,19 @@ class _ProductState extends State<Product> {
   }
 }
 
-
+extension on _ProductState {
+  Future<void> _fetch() async {
+    final id = int.tryParse(parameters['id'] ?? '') ?? 0;
+    ProductService.shared.get_product(id: id)
+        .onError((error, stackTrace) {
+      Navigator.maybeOf(context)?.pushReplacementNamed('not-found');
+    })
+        .then((value) {
+      if(value == null) return;
+      _product = value;
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+}

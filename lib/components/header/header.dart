@@ -3,6 +3,7 @@ import 'package:cdio_web/app.dart';
 import 'package:cdio_web/components/button/clickable.dart';
 import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/extensions/router_extension.dart';
+import 'package:cdio_web/utils/local_storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -145,6 +146,7 @@ class _HeaderState extends State<Header> {
           onClick: () {
             AuthService.shared.dang_xuat();
             context.app.user = null;
+            LocalStorageService.jwt = null;
           },
         )
       ],
