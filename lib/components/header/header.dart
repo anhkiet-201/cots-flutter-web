@@ -70,6 +70,30 @@ class _HeaderState extends State<Header> {
               }, icon: Icon(Iconsax.shopping_bag, color: widget.enableExpanded ? iconColor : Colors.black,)),
             SpacerH(),
             _profile(iconColor),
+            IconButton(onPressed: (){
+              showDialog(context: context, builder: (_) => AlertDialog(
+                contentPadding: EdgeInsets.zero,
+                content: SizedBox(
+                  width: 600,
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Search',
+                      hintStyle: TextStyle(
+                        height: 0
+                      ),
+                      prefixIcon: Icon(Iconsax.search_normal)
+                    ),
+                    onFieldSubmitted: (value) {
+                      print(value);
+                    },
+                  ),
+                ),
+              ));
+            }, icon: const Icon(
+              Iconsax.search_normal,
+              color: Colors.white,
+            )),
             const SizedBox(width: 50,)
           ],
           title: ClickAble(

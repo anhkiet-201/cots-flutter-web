@@ -1,5 +1,6 @@
 // import 'package:cdio_web/api/BaseApi.dart';
 // import 'package:cdio_web/api/model/Cart.dart';
+// import 'package:cdio_web/extensions/network.dart';
 //
 // class CartService {
 //   static final shared = CartService();
@@ -7,8 +8,9 @@
 //
 //   Future<List<Cart>> get_carts() async {
 //     final response = await _api.get(
-//       path: '/cart',
+//       path: 'api/Cart',
 //     );
+//     var baseResponse = response.baseResponse;
 //     return response.map((key, value) => )
 //   }
 //

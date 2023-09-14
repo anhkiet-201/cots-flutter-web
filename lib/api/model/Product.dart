@@ -1,4 +1,6 @@
-class Product {
+import 'package:cdio_web/api/model/BaseResponseModel.dart';
+
+class Product with BaseData {
   int? id;
   String? name;
   double? price;
@@ -84,6 +86,11 @@ class Product {
     //   data['listDiscount'] = this.listDiscount!.map((v) => v.toJson()).toList();
     // }
     return data;
+  }
+
+  @override
+  Product fromJsonBase(Map<String, dynamic> json) {
+    return Product.fromJson(json);
   }
 }
 

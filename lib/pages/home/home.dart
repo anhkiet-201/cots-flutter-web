@@ -5,6 +5,7 @@ import 'package:cdio_web/components/button/button.dart';
 import 'package:cdio_web/components/icons/icons-define.dart';
 import 'package:cdio_web/components/icons/icons.dart';
 import 'package:cdio_web/components/product/product-card.dart';
+import 'package:cdio_web/components/product/product-horizontal-list.dart';
 import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/layout/Layout.dart';
 import 'package:cdio_web/utils/data.dart';
@@ -56,13 +57,18 @@ class HomePage extends StatelessWidget {
           ),
         ),
         SpacerV(100),
-        _item(title: 'Pet cloths', items: petCloth),
+        const ProductHorizontalList(type: ProductHorizontalListType.cloth,),
+        // _item(title: 'Pet cloths', items: petCloth),
         SpacerV(100),
-        _item(title: 'Pet foodies', items: petFood),
+        const ProductHorizontalList(type: ProductHorizontalListType.food,),
+        SpacerV(100),
+        const ProductHorizontalList(type: ProductHorizontalListType.cat,),
+        // _item(title: 'Pet foodies', items: petFood),
         SpacerV(100),
         _midBanner(),
         SpacerV(100),
-        _item(title: 'Pet foodies', items: petCloth),
+        const ProductHorizontalList(type: ProductHorizontalListType.dog,),
+        // _item(title: 'Pet foodies', items: petCloth),
       ],
     );
   }
