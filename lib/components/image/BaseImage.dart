@@ -24,6 +24,28 @@ class BaseImage extends StatelessWidget {
           ),
         );
       },
+      errorBuilder: (_, __, ___) {
+        return Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                offset: const Offset(1, 1),
+                color: Colors.black.withOpacity(0.3),
+                blurRadius: 1,
+                spreadRadius: 1
+              )
+            ]
+          ),
+          child: const Center(
+            child: Text(
+              'Image error'
+            ),
+          ),
+        );
+      },
       fit: fit,
       width: width,
       height: height,

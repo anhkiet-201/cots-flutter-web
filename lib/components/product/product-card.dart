@@ -2,6 +2,7 @@ import 'package:cdio_web/api/model/Product.dart';
 import 'package:cdio_web/components/button/add-to-cart-button.dart';
 import 'package:cdio_web/components/button/button.dart';
 import 'package:cdio_web/components/button/clickable.dart';
+import 'package:cdio_web/components/image/BaseImage.dart';
 import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/extensions/router_extension.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class ProductCard extends StatelessWidget {
                   ]),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(
+                child: BaseImage(
                   product.listProductImage?.first.imageUrl ?? '',
                   fit: BoxFit.cover,
                 ),

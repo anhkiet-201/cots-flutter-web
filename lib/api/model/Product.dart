@@ -13,7 +13,7 @@ class Product with BaseData {
   String? seoDescription;
   String? seoTitle;
   String? seoAlias;
-  double? totalPriceDiscount;
+  num? totalPriceDiscount;
   List<ListProductImage>? listProductImage;
   // List<Null>? listDiscount;
 

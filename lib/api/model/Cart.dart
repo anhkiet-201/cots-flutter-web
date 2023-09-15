@@ -1,8 +1,10 @@
-class Cart {
+import 'package:cdio_web/api/model/BaseResponseModel.dart';
+
+class Cart with BaseData {
   int? id;
   int? productId;
   String? name;
-  int? price;
+  double? price;
   int? quantity;
 
   Cart({this.id, this.productId, this.name, this.price, this.quantity});
@@ -23,5 +25,11 @@ class Cart {
     data['price'] = price;
     data['quantity'] = quantity;
     return data;
+  }
+
+  @override
+  Cart fromJsonBase(Map<String, dynamic> json) {
+    // TODO: implement fromJsonBase
+    return Cart.fromJson(json);
   }
 }

@@ -1,6 +1,8 @@
 import 'package:cdio_web/api/model/User.dart';
+import 'package:cdio_web/components/box/check-out-box.dart';
 import 'package:cdio_web/extensions/router_extension.dart';
 import 'package:cdio_web/layout/ResponsiveLayout.dart';
+import 'package:cdio_web/pages/cart/provider/CartProvider.dart';
 import 'package:cdio_web/route.dart';
 import 'package:cdio_web/utils/local_storage_service.dart';
 import 'package:cdio_web/utils/utils.dart';

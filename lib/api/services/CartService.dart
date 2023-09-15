@@ -18,32 +18,45 @@ class CartService {
     await _api.post(path: '/api/cart', body: id);
     return true;
   }
-  
-  Future test_auth() async {
-    await _api.get(path: '/TestAuth')
-        .then((value) {
-    });
+
+  Future<List<Cart>> get_carts() async {
+    final response = await _api.get(
+      path: '/api/cart',
+    );
+    final pageResponse = response.pageableResponse;
+    return pageResponse.data.map((e) => Cart.fromJson(e)).toList();
   }
 
-  // Future<BaseResponse> update_cart(
-  //     {required int id, required int quantity}) async {
-  //   return await _api
-  //       .put(path: '/cart', params: {'id': id, 'quantity': quantity});
-  // }
-  //
-  // Future<BaseResponse> clear_cart(
-  //     {required int id, required int quantity}) async {
-  //   return await _api
-  //       .delete(path: '/cart'
-  //   );
-  // }
-  //
-  // Future<BaseResponse> remove_cart(int id) async {
-  //   return await _api
-  //       .delete(path: '/cart',
-  //     params: {
-  //         'id': id
-  //     }
-  //   );
-  // }
+  Future<bool> remove(int id) async {
+    await _api.delete(path: '/api/cart/$id');
+    return true;
+  }
+
+  Future<bool> update(int id, int quantity) async {
+    await _api
+        .put(path: '/api/cart', params: {'id': id, 'quantity': quantity});
+    return true;
+  }
+
+// Future<BaseResponse> update_cart(
+//     {required int id, required int quantity}) async {
+//   return await _api
+//       .put(path: '/cart', params: {'id': id, 'quantity': quantity});
+// }
+//
+// Future<BaseResponse> clear_cart(
+//     {required int id, required int quantity}) async {
+//   return await _api
+//       .delete(path: '/cart'
+//   );
+// }
+//
+// Future<BaseResponse> remove_cart(int id) async {
+//   return await _api
+//       .delete(path: '/cart',
+//     params: {
+//         'id': id
+//     }
+//   );
+// }
 }
