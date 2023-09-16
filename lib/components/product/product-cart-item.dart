@@ -2,6 +2,7 @@ import 'package:cdio_web/api/model/Cart.dart';
 import 'package:cdio_web/api/model/Product.dart';
 import 'package:cdio_web/api/services/ProductService.dart';
 import 'package:cdio_web/components/product/product-cart-list-item.dart';
+import 'package:cdio_web/utils/local_storage_service.dart';
 import 'package:flutter/material.dart';
 
 class ProductCartItem extends StatefulWidget {

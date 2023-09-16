@@ -34,7 +34,7 @@ class CartService {
 
   Future<bool> update(int id, int quantity) async {
     await _api
-        .put(path: '/api/cart', params: {'id': id, 'quantity': quantity});
+        .put(path: '/api/cart', body: {'productId': id, 'quantity': quantity});
     return true;
   }
 

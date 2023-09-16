@@ -84,7 +84,13 @@ class BaseApi {
     return _utf8JsonDecode(response.bodyBytes);
   }
 
-  Map<String, dynamic> _utf8JsonDecode(Uint8List value) => jsonDecode(utf8.decode(value));
+  Map<String, dynamic> _utf8JsonDecode(Uint8List value) {
+    try {
+      return jsonDecode(utf8.decode(value));
+    } catch (e, s) {
+      return {};
+    }
+  }
 
   String _paramsConvert(Map<String, dynamic>? params) {
     final paramsList = <String>[];

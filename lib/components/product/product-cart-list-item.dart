@@ -239,7 +239,7 @@ class _Provider with ChangeNotifier {
   Future<void> update(int quantity) async {
     isLoading = true;
     context.read<CheckOutBoxProvider>().isCalculating = true;
-    await _service.update(cart.id!, quantity)
+    await _service.update(product!.id!, quantity)
         .onError((error, stackTrace) {
           context.showSnackBar('Something is wrong!',type: SnackBarType.error);
       context.read<CheckOutBoxProvider>().isCalculating = false;
