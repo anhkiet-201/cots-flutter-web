@@ -3,6 +3,7 @@ import 'package:cdio_web/api/services/ProductService.dart';
 import 'package:cdio_web/components/button/add-to-cart-button.dart';
 import 'package:cdio_web/components/image/image_album.dart';
 import 'package:cdio_web/components/product/product-card.dart';
+import 'package:cdio_web/components/product/product-price.dart';
 import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/layout/Layout.dart';
 import 'package:cdio_web/utils/data.dart';
@@ -59,13 +60,7 @@ class _ProductState extends State<Product> {
                         lines: 1,
                       ),
                     ),
-                  ) :SelectableText(
-                    '\$${_product?.price ?? 0}',
-                    style: const TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  ) : ProductPrice(_product),
                   SpacerV(),
                   isLoading ? SkeletonParagraph(
                     style: const SkeletonParagraphStyle(

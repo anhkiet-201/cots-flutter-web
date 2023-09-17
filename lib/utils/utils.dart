@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 import 'package:window_location_href/window_location_href.dart';
 
 Map<String, String> get parameters {
@@ -20,3 +21,7 @@ bool validateEmail(String email) {
 bool validatePassword(String password) {
   return RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$').hasMatch(password);
 }
+
+bool validatePhone(String phone) => RegExp(r'^[\+\d](\d[-.()\s]?){7,12}\d$').hasMatch(phone);
+
+String priceFormat(double? price) => NumberFormat.currency(locale: 'vi').format(price ?? 0);

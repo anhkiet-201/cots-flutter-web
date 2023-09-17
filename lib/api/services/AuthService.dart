@@ -36,7 +36,6 @@ class AuthService {
     final baseResponse = response.baseResponse;
     if(!baseResponse.result || baseResponse.data == null) return null;
     LocalStorageService.jwt = response['token'];
-    print(LocalStorageService.jwt);
     LocalStorageService.shared.saveValue(key: LocalStorageKey.jwtKey, value: LocalStorageService.jwt);
     return User.fromJson(baseResponse.data!);
   }

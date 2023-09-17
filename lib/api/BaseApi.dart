@@ -13,7 +13,7 @@ class BaseApi {
   BaseApi();
 
   final String _baseUrl =
-      'http://18.141.219.165';
+      'http://ec2-18-141-219-165.ap-southeast-1.compute.amazonaws.com';
 
   Future<Map<String, dynamic>> get(
       {required String path, Map<String, dynamic>? params, Map<String, String>? header}) async {

@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 Widget BaseTextField({
   String? label,
   TextEditingController? controller,
-  String? Function(String?)? validator
+  String? Function(String?)? validator,
+  Function(String)? onChange,
+  String? initValue,
+  TextInputType? type
 }) => TextFormField(
   validator: validator,
   controller: controller,
+  keyboardType: type,
   decoration: InputDecoration(
       labelText: label,
       labelStyle: TextStyle(
@@ -26,4 +30,6 @@ Widget BaseTextField({
           )
       )
   ),
+  onChanged: onChange,
+  initialValue: initValue,
 );

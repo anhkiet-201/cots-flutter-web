@@ -1,7 +1,9 @@
 import 'package:cdio_web/api/model/Cart.dart';
 import 'package:cdio_web/components/button/button.dart';
 import 'package:cdio_web/components/space.dart';
+import 'package:cdio_web/extensions/router_extension.dart';
 import 'package:cdio_web/pages/cart/provider/CartProvider.dart';
+import 'package:cdio_web/utils/local_storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
@@ -84,10 +86,7 @@ class _CheckoutBoxState extends State<CheckoutBox> {
                 child: FillButton(
                     child: const Text('CHECKOUT'),
                     onTap: () {
-                      //context.push('/check-out');
-                      setState(() {
-
-                      });
+                      context.push('/check-out');
                     }))
           ],
         ),
@@ -134,6 +133,7 @@ class CheckOutBoxProvider with ChangeNotifier {
   double total = 0;
 
   List<Cart> _cart = [];
+  List<Cart> get cart => _cart;
 
   bool get isEmpty => _cart.isEmpty;
 

@@ -5,7 +5,7 @@ class Order {
   String? shipAddress;
   String? shipEmail;
   String? shipPhoneNumber;
-  int? totalPrice;
+  double? totalPrice;
 
   Order(
       {this.id,

@@ -107,7 +107,7 @@ class _ViewState extends State<_View> {
                           child: DropdownButtonFormField<String>(
                             value: '${provider.cart.quantity}',
                             items: [
-                              for(int i = 1; i < 11; i++)
+                              for(int i = 1; i < 51; i++)
                                 DropdownMenuItem(
                                   value: '$i',
                                   child: Text('$i'),

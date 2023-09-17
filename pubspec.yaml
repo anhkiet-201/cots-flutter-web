@@ -44,6 +44,8 @@ dependencies:
   google_sign_in: ^6.1.5
   skeletons: ^0.0.3
   url_strategy: ^0.2.0
+  url_launcher: ^6.1.14
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

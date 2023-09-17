@@ -3,6 +3,7 @@ import 'package:cdio_web/components/button/add-to-cart-button.dart';
 import 'package:cdio_web/components/button/button.dart';
 import 'package:cdio_web/components/button/clickable.dart';
 import 'package:cdio_web/components/image/BaseImage.dart';
+import 'package:cdio_web/components/product/product-price.dart';
 import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/extensions/router_extension.dart';
 import 'package:flutter/material.dart';
@@ -59,13 +60,7 @@ class ProductCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     SpacerV(5),
-                    Text(
-                      '\$${product.price ?? 0}',
-                      style: const TextStyle(
-                          fontSize: 25,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w100),
-                    )
+                    ProductPrice(product)
                   ],
                 ),
               ),

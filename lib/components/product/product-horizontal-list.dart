@@ -21,7 +21,7 @@ class _ProductHorizontalListState extends State<ProductHorizontalList> {
   Future<void> _fetch() async {
     await ProductService.shared.list_product_info_homepage(
       keyword: widget.type.keyword,
-        pageIndex: 0,
+        pageIndex: 1,
       pageSize: 4
     ).onError((error, stackTrace){
           context.showSnackBar('Fetch data error', type: SnackBarType.error);
