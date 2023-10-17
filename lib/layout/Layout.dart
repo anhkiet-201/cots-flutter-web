@@ -17,17 +17,19 @@ class Layout extends StatelessWidget {
       required this.children,
       this.enableExpanded = false,
       this.banner,
-      this.title}) {
+      this.title,
+      this.slivers = const []}) {
     child = null;
   }
 
-  Layout.single({super.key, this.enableExpanded = false, this.banner, required this.child, this.title});
+  Layout.single({super.key, this.enableExpanded = false, this.banner, required this.child, this.title, this.slivers = const []});
 
   late List<Widget> children;
   late final Widget? child;
   final bool enableExpanded;
   final Widget? banner;
   final String? title;
+  final List<Widget> slivers;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,7 @@ class Layout extends StatelessWidget {
             return CustomScrollView(
               slivers: [
                 _header(isMobile),
+                ...slivers,
                 SliverToBoxAdapter(
                     child: child ?? Column(
                   crossAxisAlignment: CrossAxisAlignment.center ,

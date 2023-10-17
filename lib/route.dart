@@ -6,9 +6,11 @@ import 'package:cdio_web/pages/login/login.dart';
 import 'package:cdio_web/pages/login/provider/LoginProvider.dart';
 import 'package:cdio_web/pages/not-found/not-found.dart';
 import 'package:cdio_web/pages/order/order.dart';
+import 'package:cdio_web/pages/pagement-result/payment-result.dart';
 import 'package:cdio_web/pages/product/product.dart';
 import 'package:cdio_web/pages/register/provide/RegisterProvide.dart';
 import 'package:cdio_web/pages/register/register.dart';
+import 'package:cdio_web/pages/search/search.dart';
 import 'package:flutter/material.dart';
 
 MaterialPageRoute routing(RouteSettings settings, BuildContext context) {
@@ -20,7 +22,9 @@ MaterialPageRoute routing(RouteSettings settings, BuildContext context) {
     '/register' : const Register().provider(RegisterProvide.new),
     '/cart' : const Cart(),
     '/check-out': const CheckOut(),
-    '/order': const Order()
+    '/order': const Order(),
+    '/payment-result': const PaymentResult(),
+    '/search': const Search(),
   };
   if(context.app.user != null) {
     switch(routeSettings.name ?? '') {
