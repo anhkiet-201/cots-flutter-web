@@ -5,6 +5,7 @@ import 'package:cdio_web/components/button/button.dart';
 import 'package:cdio_web/components/product/product-card-skeleton.dart';
 import 'package:cdio_web/components/product/product-card.dart';
 import 'package:cdio_web/components/space.dart';
+import 'package:cdio_web/extensions/router_extension.dart';
 import 'package:cdio_web/extensions/snack_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,8 @@ class _ProductHorizontalListState extends State<ProductHorizontalList> {
     await ProductService.shared.list_product_info_homepage(
       keyword: widget.type.keyword,
         pageIndex: 1,
-      pageSize: 4
+      pageSize: 4,
+      categoryId: widget.type.category
     ).onError((error, stackTrace){
           context.showSnackBar('Fetch data error', type: SnackBarType.error);
           return Pageable.empty();
@@ -104,7 +106,12 @@ class _ProductHorizontalListState extends State<ProductHorizontalList> {
                   const Icon(Icons.arrow_right_alt_rounded)
                 ],
               ),
-              onTap: (){}
+              onTap: (){
+                context.push('/search',{
+                  'keyword': widget.type.keyword,
+                  'categoryId' : widget.type.category
+                });
+              }
           )
         ],
       ),
@@ -136,6 +143,16 @@ enum ProductHorizontalListType {
       case ProductHorizontalListType.food: return '3';
       case ProductHorizontalListType.cloth: return '4';
       case ProductHorizontalListType.discount: return 'discount';
+    }
+  }
+
+  int? get category {
+    switch(this) {
+      case ProductHorizontalListType.cat: return 2;
+      case ProductHorizontalListType.dog: return 1;
+      case ProductHorizontalListType.food: return 3;
+      case ProductHorizontalListType.cloth: return 4;
+      case ProductHorizontalListType.discount: return null;
     }
   }
 }

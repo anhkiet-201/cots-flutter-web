@@ -10,14 +10,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
-
-GoogleSignIn _googleSignIn = GoogleSignIn(
-  scopes: [
-    'email',
-  ],
-);
-
-
 class Header extends StatefulWidget {
   const Header({super.key, this.enableExpanded = true, this.customBanner});
   final bool enableExpanded;
@@ -32,10 +24,6 @@ class _HeaderState extends State<Header> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _googleSignIn.onCurrentUserChanged.listen((event) async {
-      final header = await _googleSignIn.currentUser?.authHeaders;
-      print(header?['Authorization']);
-    });
   }
   
   @override
@@ -65,12 +53,6 @@ class _HeaderState extends State<Header> {
           ) : null,
           pinned: true,
           actions: [
-            if(context.app.user != null)
-              IconButton(onPressed: () {
-                context.push('/cart');
-              }, icon: Icon(Iconsax.shopping_bag, color: widget.enableExpanded ? iconColor : Colors.black,)),
-            SpacerH(),
-            _profile(iconColor),
             IconButton(onPressed: (){
               showDialog(context: context, builder: (_) => AlertDialog(
                 contentPadding: EdgeInsets.zero,
@@ -78,23 +60,30 @@ class _HeaderState extends State<Header> {
                   width: 600,
                   child: TextFormField(
                     decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Search',
-                      hintStyle: TextStyle(
-                        height: 0
-                      ),
-                      prefixIcon: Icon(Iconsax.search_normal)
+                        border: InputBorder.none,
+                        hintText: 'Search',
+                        hintStyle: TextStyle(
+                            height: 0
+                        ),
+                        prefixIcon: Icon(Icons.search_rounded, color: Colors.black,)
                     ),
                     onFieldSubmitted: (value) {
-                      print(value);
+                      Navigator.maybeOf(context)?.pop();
+                      context.push('/search',{'keyword': value});
                     },
                   ),
                 ),
               ));
-            }, icon: const Icon(
+            }, icon: Icon(
               Iconsax.search_normal,
-              color: Colors.white,
+              color: widget.enableExpanded ? iconColor : Colors.black,
             )),
+            if(context.app.user != null)
+              IconButton(onPressed: () {
+                context.push('/cart');
+              }, icon: Icon(Iconsax.shopping_bag, color: widget.enableExpanded ? iconColor : Colors.black,)),
+            SpacerH(),
+            _profile(iconColor),
             const SizedBox(width: 50,)
           ],
           title: ClickAble(

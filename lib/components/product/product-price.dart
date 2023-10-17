@@ -3,8 +3,9 @@ import 'package:cdio_web/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class ProductPrice extends StatelessWidget {
-  const ProductPrice(this.product, {super.key});
+  const ProductPrice(this.product, {super.key, this.size = 25});
   final Product? product;
+  final double size;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -13,16 +14,16 @@ class ProductPrice extends StatelessWidget {
         if(product?.originalPrice != null)
           Text(
             priceFormat(product?.originalPrice ?? 0),
-            style: const TextStyle(
+            style: TextStyle(
                 decoration: TextDecoration.lineThrough,
-                fontSize: 18,
+                fontSize: size - 7,
                 fontStyle: FontStyle.italic,
                 fontWeight: FontWeight.w100),
           ),
         Text(
           priceFormat(product?.price ?? 0),
-          style: const TextStyle(
-              fontSize: 25,
+          style: TextStyle(
+              fontSize: size,
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.w100),
         )

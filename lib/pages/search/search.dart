@@ -1,10 +1,13 @@
 import 'dart:html';
-
 import 'package:cdio_web/api/model/BaseResponseModel.dart';
+import 'package:cdio_web/api/model/Category.dart';
 import 'package:cdio_web/api/model/Product.dart';
+import 'package:cdio_web/api/services/CategoryService.dart';
 import 'package:cdio_web/api/services/ProductService.dart';
+import 'package:cdio_web/components/button/clickable.dart';
 import 'package:cdio_web/components/image/BaseImage.dart';
 import 'package:cdio_web/components/product/product-cart-list-item.dart';
+import 'package:cdio_web/components/product/product-price.dart';
 import 'package:cdio_web/layout/Layout.dart';
 import 'package:cdio_web/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -24,13 +27,17 @@ class _SearchState extends State<Search> {
   final List<Product> _products = [];
   bool _isLoadMore = false;
   bool _isLoading = false;
+  bool _isLoadingCategories = false;
+  final List<Category> _categories = [];
   final _search = TextEditingController();
 
   @override
   void initState() {
+    _currentPage = int.tryParse(parameters['page'] ?? '') ?? 1;
     _categoryId = int.tryParse(parameters['categoryId'] ?? '');
     _search.text = parameters['keyword'] ?? '';
     _isLoading = true;
+    _fetch_categories();
     _fetch();
     super.initState();
   }
@@ -41,6 +48,9 @@ class _SearchState extends State<Search> {
       title: 'Search',
       children: [
         _searchBar(),
+        const SizedBox(
+          height: 10,
+        ),
         const SizedBox(
           height: 50,
         ),
@@ -62,8 +72,7 @@ class _SearchState extends State<Search> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          for(int i = 0; i < 4; i++)
-            const ProductCartListItemSkeleton()
+          for (int i = 0; i < 4; i++) const ProductCartListItemSkeleton()
         ],
       ),
     );
@@ -93,16 +102,64 @@ class _SearchState extends State<Search> {
       width: double.infinity,
       constraints: const BoxConstraints(maxWidth: 1080),
       child: Center(
-        child: TextFormField(
-          controller: _search,
-          decoration: const InputDecoration(
-              border: InputBorder.none,
-              hintText: 'Search',
-              prefixIcon: Icon(Iconsax.search_normal)
+          child: Row(
+        children: [
+          Expanded(
+            child: TextFormField(
+              controller: _search,
+              decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Search',
+                  prefixIcon: Icon(Iconsax.search_normal)),
+              onFieldSubmitted: (_) {
+                _onSubmit();
+              },
+            ),
           ),
-          onFieldSubmitted: (_) {_onSubmit();},
-        ),
-      ),
+          SizedBox(
+              width: 150,
+              height: 50,
+              child: Center(
+                child: _isLoadingCategories
+                    ? const CircularProgressIndicator()
+                    : DropdownButtonFormField<int>(
+                        value: _categoryId ?? -1,
+                        items: [
+                          const DropdownMenuItem(
+                            value: -1,
+                            child: Text('All'),
+                          ),
+                          for (int i = 0; i < _categories.length; i++)
+                            DropdownMenuItem(
+                              value: _categories[i].id,
+                              child: Text('${_categories[i].name}'),
+                            )
+                        ],
+                        onChanged: (value) {
+                          if ((value ?? -1) == -1) {
+                            _categoryId = null;
+                          } else {
+                            _categoryId = value;
+                          }
+                          _onSubmit();
+                        },
+                        style: const TextStyle(fontSize: 12),
+                        isExpanded: true,
+                        elevation: 1,
+                        borderRadius: BorderRadius.circular(10),
+                        decoration: const InputDecoration(
+                          labelText: 'Category',
+                          border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 0.5)),
+                          labelStyle: TextStyle(fontSize: 12),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 0.5)),
+                        ),
+                      ),
+              ))
+        ],
+      )),
     );
   }
 
@@ -116,24 +173,56 @@ class _SearchState extends State<Search> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            for (int i = 0; i < _products.length; i++) 
-              _SearchItem(_products[i])
+            for (int i = 0; i < _products.length; i++)
+              _SearchItem(_products[i]),
+            if (_currentPage < _totalPage) _loadMoreButton()
           ],
         ),
       ),
     );
   }
 
+  Widget _loadMoreButton() {
+    return ClickAble(
+      onClick: _loadMore,
+      child: Container(
+        height: 50,
+        width: 200,
+        decoration: BoxDecoration(border: Border.all()),
+        child: Center(
+          child: _isLoadMore
+              ? const SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    color: Colors.black,
+                  ))
+              : const Text(
+                  'LOAD MORE',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+        ),
+      ),
+    );
+  }
+
+  _loadMore() {
+    if (_isLoadMore) return;
+    _isLoadMore = true;
+    _currentPage += 1;
+    _fetch();
+  }
+
   _fetch() {
+    _updateUrl();
     ProductService.shared
         .list_product_info_homepage(
-            pageIndex: _currentPage,
-            keyword: _search.text,
-            categoryId: _categoryId)
+            pageIndex: _currentPage, keyword: _search.text, categoryId: 50)
         .onError((error, stackTrace) {
       return Pageable.empty();
     }).then((value) {
-     _isLoading = false;
+      _isLoading = false;
+      _isLoadMore = false;
       _totalPage = value.totalPage;
       setState(() {
         _products.addAll(value.items);
@@ -142,7 +231,6 @@ class _SearchState extends State<Search> {
   }
 
   _onSubmit() {
-    _updateUrl();
     setState(() {
       _isLoading = true;
     });
@@ -154,6 +242,8 @@ class _SearchState extends State<Search> {
   void _updateUrl() {
     var params = Map.from(parameters);
     params['keyword'] = _search.text;
+    params['page'] = _currentPage;
+    params['categoryId'] = _categoryId;
     final paramsList = <String>[];
     params.forEach((key, value) {
       paramsList.add('$key=$value');
@@ -161,10 +251,23 @@ class _SearchState extends State<Search> {
     final path = paramsList.isEmpty ? '' : '/search?${paramsList.join('&')}';
     window.history.replaceState({}, 'Search', path);
   }
+
+  _fetch_categories() {
+    setState(() {
+      _isLoadingCategories = true;
+    });
+    CategoryService.shared.get_all().then((value) {
+      _categories.addAll(value);
+      setState(() {
+        _isLoadingCategories = false;
+      });
+    });
+  }
 }
 
 class _SearchItem extends StatelessWidget {
   const _SearchItem(this.product, {super.key});
+
   final Product product;
 
   @override
@@ -172,10 +275,7 @@ class _SearchItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 6),
       height: 150,
-      constraints: const BoxConstraints(
-          maxWidth: 800,
-          minWidth: 600
-      ),
+      constraints: const BoxConstraints(maxWidth: 800, minWidth: 600),
       child: Row(
         children: [
           BaseImage(
@@ -194,22 +294,32 @@ class _SearchItem extends StatelessWidget {
                       children: [
                         Text(
                           '${product.name}',
-                          style: const TextStyle(
-                              fontSize: 16
-                          ),
+                          style: const TextStyle(fontSize: 16),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const Text(
-                          'Option: option 1',
-                          style: TextStyle(
-                              fontSize: 12
-                          ),
+                        Text(
+                          '${product.details}',
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          '${product.description}',
+                          style: const TextStyle(fontSize: 12),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(width: 20,),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  ProductPrice(
+                    product,
+                    size: 18,
+                  )
                 ],
               ),
             ),
@@ -219,4 +329,3 @@ class _SearchItem extends StatelessWidget {
     );
   }
 }
-
