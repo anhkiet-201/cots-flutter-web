@@ -4,6 +4,7 @@ import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/extensions/router_extension.dart';
 import 'package:cdio_web/pages/cart/provider/CartProvider.dart';
 import 'package:cdio_web/utils/local_storage_service.dart';
+import 'package:cdio_web/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
@@ -38,30 +39,30 @@ class _CheckoutBoxState extends State<CheckoutBox> {
                 ),
                 const Spacer(),
                 Text(
-                  '\$${provider.subTotal}',
+                  priceFormat(provider.subTotal),
                   style: const TextStyle(
                     fontSize: 14,
                   ),
                 )
               ],
             ),
-            Row(
-              children: [
-                const Text(
-                  'Shipping cost',
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
-                ),
-                const Spacer(),
-                Text(
-                  '\$${provider.shipping}',
-                  style: const TextStyle(
-                    fontSize: 12,
-                  ),
-                )
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     const Text(
+            //       'Shipping cost',
+            //       style: TextStyle(
+            //         fontSize: 12,
+            //       ),
+            //     ),
+            //     const Spacer(),
+            //     Text(
+            //       '\$${provider.shipping}',
+            //       style: const TextStyle(
+            //         fontSize: 12,
+            //       ),
+            //     )
+            //   ],
+            // ),
             Row(
               children: [
                 const Text(
@@ -73,9 +74,10 @@ class _CheckoutBoxState extends State<CheckoutBox> {
                 ),
                 const Spacer(),
                 Text(
-                  '\$${provider.total}',
+                  priceFormat(provider.total),
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold
                   ),
                 )
               ],

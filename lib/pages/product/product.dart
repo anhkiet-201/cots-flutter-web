@@ -3,6 +3,7 @@ import 'package:cdio_web/api/services/ProductService.dart';
 import 'package:cdio_web/components/button/add-to-cart-button.dart';
 import 'package:cdio_web/components/image/image_album.dart';
 import 'package:cdio_web/components/product/product-card.dart';
+import 'package:cdio_web/components/product/product-horizontal-list.dart';
 import 'package:cdio_web/components/product/product-price.dart';
 import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/layout/Layout.dart';
@@ -53,6 +54,20 @@ class _ProductState extends State<Product> {
                       maxLines: 2,
                     ),
                   ),
+                  isLoading ? SizedBox(
+                    width: 150,
+                    child: SkeletonParagraph(
+                      style: const SkeletonParagraphStyle(
+                        lines: 1,
+                      ),
+                    ),
+                  ) : Text(
+                    '${_product?.details}',
+                    style: const TextStyle(
+                        fontStyle: FontStyle.italic
+                    ),
+                  ),
+                  SpacerV(),
                   isLoading ? SizedBox(
                     width: 150,
                     child: SkeletonParagraph(
@@ -126,27 +141,17 @@ class _ProductState extends State<Product> {
         ),
         SpacerV(100),
         Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-                maxWidth: 1360
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // const Divider(height: 1,color: Colors.grey, indent: 50, endIndent: 50,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
-                  child: Center(
-                    child: Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      spacing: 20,
-                      runSpacing: 20,
-                      children: petCloth.map((e) => ProductCard(e)).toList(),
-                    ),
-                  ),
-                )
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // const Divider(height: 1,color: Colors.grey, indent: 50, endIndent: 50,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50),
+                child: Center(
+                  child: ProductHorizontalList.withCategory(categoryId: _product?.categoryId)
+                ),
+              )
+            ],
           ),
         ),
       ],

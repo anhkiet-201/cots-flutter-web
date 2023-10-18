@@ -188,6 +188,7 @@ class _SearchState extends State<Search> {
       child: Container(
         height: 50,
         width: 200,
+        margin: const EdgeInsets.all(20),
         decoration: BoxDecoration(border: Border.all()),
         child: Center(
           child: _isLoadMore
@@ -219,7 +220,7 @@ class _SearchState extends State<Search> {
     _updateUrl();
     ProductService.shared
         .list_product_info_homepage(
-            pageIndex: _currentPage, keyword: _search.text, categoryId: 50)
+            pageIndex: _currentPage, keyword: _search.text, categoryId: _categoryId)
         .onError((error, stackTrace) {
       return Pageable.empty();
     }).then((value) {

@@ -1,3 +1,4 @@
+import 'package:cdio_web/api/model/ErrorResponse.dart';
 import 'package:cdio_web/api/model/PaymentDestination.dart';
 import 'package:cdio_web/api/services/OrderService.dart';
 import 'package:cdio_web/api/services/Payment.dart';
@@ -43,7 +44,14 @@ class CheckoutPageProvider with ChangeNotifier {
         email: email.text,
         phone: phone.text,
         list: CheckOutBoxProvider.shared.cart.map((e) => OrderRequest(e.productId!, e.quantity!)).toList()
-    );
+    ).onError((error, stackTrace) {
+      if(error is ErrorResponse) {
+        context.showSnackBar(error.error?.first ?? '', type: SnackBarType.error);
+      } else {
+        context.showSnackBar('Something is error', type: SnackBarType.error);
+      }
+      return null;
+    });
     if(order == null) {
       context.showSnackBar('Create order error!', type: SnackBarType.error);
       isLoading = false;
@@ -59,6 +67,9 @@ class CheckoutPageProvider with ChangeNotifier {
     }).then((value) {
       if(value == null) return;
       launchUrl(Uri.parse(value.paymentUrl!));
+      Navigator.popUntil(context, (p){
+        return p.settings.name == '/';
+      });
     }).whenComplete(() => isLoading = false);
   }
 }

@@ -5,6 +5,7 @@ import 'package:cdio_web/api/services/CartService.dart';
 import 'package:cdio_web/components/box/check-out-box.dart';
 import 'package:cdio_web/components/button/clickable.dart';
 import 'package:cdio_web/components/image/BaseImage.dart';
+import 'package:cdio_web/components/product/product-price.dart';
 import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/extensions/snack_bar.dart';
 import 'package:flutter/material.dart';
@@ -71,9 +72,9 @@ class _ViewState extends State<_View> {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const Text(
-                            'Option: option 1',
-                            style: TextStyle(
+                          Text(
+                            provider.product?.details ?? '',
+                            style: const TextStyle(
                                 fontSize: 12
                             ),
                           ),
@@ -131,7 +132,7 @@ class _ViewState extends State<_View> {
                           ),
                         ),
                         const Spacer(),
-                        Text('\$${provider.cart.price}')
+                        ProductPrice(provider.product, size: 20,)
                       ],
                     )
                   ],

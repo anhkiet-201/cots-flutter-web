@@ -32,7 +32,7 @@ class _OrderState extends State<Order> {
     }).then((value) {
       _isLoading = false;
       setState(() {
-        _order.addAll(value);
+        _order.addAll(value.reversed);
       });
     });
   }

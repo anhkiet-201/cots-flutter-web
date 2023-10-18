@@ -10,8 +10,14 @@ import 'package:cdio_web/extensions/snack_bar.dart';
 import 'package:flutter/material.dart';
 
 class ProductHorizontalList extends StatefulWidget {
-  const ProductHorizontalList({super.key, required this.type});
-  final ProductHorizontalListType type;
+  ProductHorizontalList({super.key, required this.type}) {
+    categoryId = null;
+  }
+  ProductHorizontalList.withCategory({super.key, required this.categoryId}) {
+    type = ProductHorizontalListType.categoryId;
+  }
+  late final ProductHorizontalListType type;
+  late final int? categoryId;
   @override
   State<ProductHorizontalList> createState() => _ProductHorizontalListState();
 }
@@ -24,7 +30,7 @@ class _ProductHorizontalListState extends State<ProductHorizontalList> {
       keyword: widget.type.keyword,
         pageIndex: 1,
       pageSize: 4,
-      categoryId: widget.type.category
+      categoryId: widget.type.category ?? widget.categoryId
     ).onError((error, stackTrace){
           context.showSnackBar('Fetch data error', type: SnackBarType.error);
           return Pageable.empty();
@@ -109,7 +115,7 @@ class _ProductHorizontalListState extends State<ProductHorizontalList> {
               onTap: (){
                 context.push('/search',{
                   'keyword': widget.type.keyword,
-                  'categoryId' : widget.type.category
+                  'categoryId' : widget.type.category ?? widget.categoryId
                 });
               }
           )
@@ -124,7 +130,8 @@ enum ProductHorizontalListType {
   food,
   discount,
   dog,
-  cat;
+  cat,
+  categoryId;
 
   String get title {
     switch(this) {
@@ -133,6 +140,7 @@ enum ProductHorizontalListType {
       case ProductHorizontalListType.food: return 'Pet Foodies';
       case ProductHorizontalListType.cloth: return 'Pet Cloths';
       case ProductHorizontalListType.discount: return 'Discounting';
+      case ProductHorizontalListType.categoryId: return 'Same product';
     }
   }
 
@@ -143,6 +151,7 @@ enum ProductHorizontalListType {
       case ProductHorizontalListType.food: return '3';
       case ProductHorizontalListType.cloth: return '4';
       case ProductHorizontalListType.discount: return 'discount';
+      case ProductHorizontalListType.categoryId: return '';
     }
   }
 
@@ -153,6 +162,7 @@ enum ProductHorizontalListType {
       case ProductHorizontalListType.food: return 3;
       case ProductHorizontalListType.cloth: return 4;
       case ProductHorizontalListType.discount: return null;
+      case ProductHorizontalListType.categoryId: return null;
     }
   }
 }

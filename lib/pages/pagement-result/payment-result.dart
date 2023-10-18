@@ -126,7 +126,9 @@ class _PaymentResultState extends State<PaymentResult> {
               SizedBox(
               height: 40,
               child: ElevatedButton(
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.maybeOf(context)?.pushReplacementNamed('/order');
+                },
                 style: ElevatedButton.styleFrom(
                     shape: const RoundedRectangleBorder(),
                     backgroundColor: Colors.green
