@@ -1,6 +1,7 @@
 import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/components/text_field/BaseTextField.dart';
 import 'package:cdio_web/components/title/TitleExpansionTile.dart';
+import 'package:cdio_web/extensions/router_extension.dart';
 import 'package:cdio_web/pages/check-out/provider/CheckoutPageProvider.dart';
 import 'package:cdio_web/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +35,12 @@ class _ShippingInfoState extends State<ShippingInfo> {
         ),
         color: Colors.white,
         child: ExpansionTile(
+          initiallyExpanded: true,
           title: TitleExpansionTile(number: 1, label: 'Shipping address'),
           children: [
             SpacerV(30),
             BaseTextField(
-              controller: _provider.email,
+              controller: _provider.email..text = context.app.user?.email ?? '',
                 label: 'Email',
               validator: (value) {
                   if(validateEmail(value ?? '')) return null;

@@ -1,4 +1,5 @@
 import 'package:cdio_web/api/BaseApi.dart';
+import 'package:cdio_web/api/model/Payment.dart';
 import 'package:cdio_web/extensions/network.dart';
 
 class PaymentService {
@@ -21,6 +22,15 @@ class PaymentService {
     final baseResponse = response.baseResponse;
     if(baseResponse.data == null) return null;
     return CreatePaymentResponse.fromJson(baseResponse.data!);
+  }
+
+  Future<Payment?> get_pay(int id) async {
+    final response = await _api.get(
+      path: '/api/payment/$id'
+    );
+    final baseResponse = response.baseResponse;
+    if(baseResponse.data == null) return null;
+    return Payment.fromJson(baseResponse.data!);
   }
 }
 

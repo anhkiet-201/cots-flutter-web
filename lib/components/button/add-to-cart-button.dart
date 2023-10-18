@@ -62,7 +62,6 @@ class AddToCartButtonState extends State<AddToCartButton> {
     });
     CartService.shared.add_to_cart(widget.productId!)
         .onError((error, stackTrace) {
-      if(error is FormatException) return true;
       context.showSnackBar('Add to cart failure!', type: SnackBarType.error);
       return false;
     }).then((value) {

@@ -1,5 +1,3 @@
-import 'package:cdio_web/api/services/AuthService.dart';
-import 'package:cdio_web/app.dart';
 import 'package:cdio_web/components/button/button.dart';
 import 'package:cdio_web/components/button/clickable.dart';
 import 'package:cdio_web/components/button/google-login-button.dart';
@@ -7,7 +5,6 @@ import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/components/text_field/EmailField.dart';
 import 'package:cdio_web/components/text_field/PasswordField.dart';
 import 'package:cdio_web/extensions/router_extension.dart';
-import 'package:cdio_web/extensions/snack_bar.dart';
 import 'package:cdio_web/pages/login/provider/LoginProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +19,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +85,7 @@ class _LoginState extends State<Login> {
 extension on _LoginState {
   Widget _loginButton() {
     final provide = context.watch<LoginProvider>();
-    if(provide.isLoading){
+    if (provide.isLoading) {
       return FillButton(
           child: const SizedBox(
             width: 40,
@@ -102,16 +100,13 @@ extension on _LoginState {
               ),
             ),
           ),
-          onTap: () async {
-          });
+          onTap: () async {});
     }
     return FillButton(
         child: const Text('Login'),
         onTap: () {
           context.read<LoginProvider>().login(
-            email: _emailController.text,
-            password: _passwordController.text
-          );
+              email: _emailController.text, password: _passwordController.text);
         });
   }
 }

@@ -208,7 +208,9 @@ class _SearchState extends State<Search> {
 
   _loadMore() {
     if (_isLoadMore) return;
-    _isLoadMore = true;
+    setState(() {
+      _isLoadMore = true;
+    });
     _currentPage += 1;
     _fetch();
   }
