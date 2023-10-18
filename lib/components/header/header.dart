@@ -75,13 +75,17 @@ class _HeaderState extends State<Header> {
                 ),
               ));
             }, icon: Icon(
-              Iconsax.search_normal,
+              Icons.search_rounded,
               color: widget.enableExpanded ? iconColor : Colors.black,
             )),
             if(context.app.user != null)
               IconButton(onPressed: () {
                 context.push('/cart');
-              }, icon: Icon(Iconsax.shopping_bag, color: widget.enableExpanded ? iconColor : Colors.black,)),
+              }, icon: Icon(Iconsax.shopping_cart, color: widget.enableExpanded ? iconColor : Colors.black,)),
+            if(context.app.user != null)
+              IconButton(onPressed: () {
+                context.push('/order');
+              }, icon: Icon(Iconsax.receipt, color: widget.enableExpanded ? iconColor : Colors.black,)),
             SpacerH(),
             _profile(iconColor),
             const SizedBox(width: 50,)

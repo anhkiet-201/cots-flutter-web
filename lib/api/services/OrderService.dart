@@ -1,5 +1,6 @@
 import 'package:cdio_web/api/BaseApi.dart';
 import 'package:cdio_web/api/model/Order.dart';
+import 'package:cdio_web/api/model/OrderHistory.dart';
 import 'package:cdio_web/extensions/network.dart';
 
 class OrderService {
@@ -23,8 +24,22 @@ class OrderService {
       "listProductOrder": listProductOrder
     });
     final baseResponse = response.baseResponse;
-    if(baseResponse.data == null) return null;
+    if (baseResponse.data == null) return null;
     return Order.fromJson(baseResponse.data!);
+  }
+
+  Future<List<OrderHistory>> get_history_order() async {
+    final response =
+        await _api.get(path: '/api/Customer/order-history-of-customer');
+    final baseResponse = response.pageableResponse;
+    return baseResponse.data.map((e) => OrderHistory.fromJson(e)).toList();
+  }
+
+  Future<List<OrderHistoryDetail>> get_history_order_detail(int id) async {
+    final response = await _api.get(
+        path: '/api/Customer/order-detail-of-user', params: {'orderId': id});
+    final baseResponse = response.pageableResponse;
+    return baseResponse.data.map((e) => OrderHistoryDetail.fromJson(e)).toList();
   }
 }
 
