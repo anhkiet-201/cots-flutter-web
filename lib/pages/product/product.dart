@@ -2,12 +2,10 @@ import 'package:cdio_web/api/model/Product.dart' as ProductModel;
 import 'package:cdio_web/api/services/ProductService.dart';
 import 'package:cdio_web/components/button/add-to-cart-button.dart';
 import 'package:cdio_web/components/image/image_album.dart';
-import 'package:cdio_web/components/product/product-card.dart';
 import 'package:cdio_web/components/product/product-horizontal-list.dart';
 import 'package:cdio_web/components/product/product-price.dart';
 import 'package:cdio_web/components/space.dart';
 import 'package:cdio_web/layout/Layout.dart';
-import 'package:cdio_web/utils/data.dart';
 import 'package:cdio_web/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletons/skeletons.dart';
@@ -25,7 +23,7 @@ class _ProductState extends State<Product> {
 
   @override
   Widget build(BuildContext context) {
-    if(_product == null) {
+    if (_product == null) {
       _fetch();
     }
     return Layout(
@@ -35,9 +33,11 @@ class _ProductState extends State<Product> {
           spacing: 20,
           children: [
             ImageAlbum(
-              isLoading: isLoading,
-                _product?.listProductImage?.map((e) => e.imageUrl ?? '').toList() ?? []
-            ),
+                isLoading: isLoading,
+                _product?.listProductImage
+                        ?.map((e) => e.imageUrl ?? '')
+                        .toList() ??
+                    []),
             SizedBox(
               width: 720,
               child: Column(
@@ -45,59 +45,57 @@ class _ProductState extends State<Product> {
                 children: [
                   SizedBox(
                     height: 100,
-                    child: isLoading ? SkeletonParagraph() : SelectableText(
-                        '${_product?.name}',
-                      style: const TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w600
-                      ),
-                      maxLines: 2,
-                    ),
+                    child: isLoading
+                        ? SkeletonParagraph()
+                        : SelectableText(
+                            '${_product?.name}',
+                            style: const TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.w600),
+                            maxLines: 2,
+                          ),
                   ),
-                  isLoading ? SizedBox(
-                    width: 150,
-                    child: SkeletonParagraph(
-                      style: const SkeletonParagraphStyle(
-                        lines: 1,
-                      ),
-                    ),
-                  ) : Text(
-                    '${_product?.details}',
-                    style: const TextStyle(
-                        fontStyle: FontStyle.italic
-                    ),
-                  ),
+                  isLoading
+                      ? SizedBox(
+                          width: 150,
+                          child: SkeletonParagraph(
+                            style: const SkeletonParagraphStyle(
+                              lines: 1,
+                            ),
+                          ),
+                        )
+                      : Text(
+                          '${_product?.details}',
+                          style: const TextStyle(fontStyle: FontStyle.italic),
+                        ),
                   SpacerV(),
-                  isLoading ? SizedBox(
-                    width: 150,
-                    child: SkeletonParagraph(
-                      style: const SkeletonParagraphStyle(
-                        lines: 1,
-                      ),
-                    ),
-                  ) : ProductPrice(_product),
+                  isLoading
+                      ? SizedBox(
+                          width: 150,
+                          child: SkeletonParagraph(
+                            style: const SkeletonParagraphStyle(
+                              lines: 1,
+                            ),
+                          ),
+                        )
+                      : ProductPrice(_product),
                   SpacerV(),
-                  isLoading ? SkeletonParagraph(
-                    style: const SkeletonParagraphStyle(
-                      lines: 5
-                    ),
-                  ) :Container(
-                    constraints: const BoxConstraints(
-                      minHeight: 100
-                    ),
-                    child: SelectableText(
-                      '${_product?.description}',
-                      style: const TextStyle(
-                        fontStyle: FontStyle.italic
-                      ),
-                    ),
-                  ),
+                  isLoading
+                      ? SkeletonParagraph(
+                          style: const SkeletonParagraphStyle(lines: 5),
+                        )
+                      : Container(
+                          constraints: const BoxConstraints(minHeight: 100),
+                          child: SelectableText(
+                            '${_product?.description}',
+                            style: const TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                        ),
                   SpacerV(50),
-                  isLoading ? const SkeletonAvatar(
-                    style: SkeletonAvatarStyle(
-                      width: double.infinity
-                    ),
-                  ) : AddToCartButton(_product?.id),
+                  isLoading
+                      ? const SkeletonAvatar(
+                          style: SkeletonAvatarStyle(width: double.infinity),
+                        )
+                      : AddToCartButton(_product?.id),
                   SpacerV(),
                   // Row(
                   //   children: [
@@ -125,17 +123,12 @@ class _ProductState extends State<Product> {
           ],
         ),
         SpacerV(100),
-        const Text(
-          'Related products'
-        ),
+        const Text('Related products'),
         const SizedBox(
           width: 500,
           child: Text(
             'You might also want to check out these products.',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w600
-            ),
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
             textAlign: TextAlign.center,
           ),
         ),
@@ -148,8 +141,8 @@ class _ProductState extends State<Product> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 child: Center(
-                  child: ProductHorizontalList.withCategory(categoryId: _product?.categoryId)
-                ),
+                    child: ProductHorizontalList.withCategory(
+                        categoryId: _product?.categoryId)),
               )
             ],
           ),
@@ -162,12 +155,10 @@ class _ProductState extends State<Product> {
 extension on _ProductState {
   Future<void> _fetch() async {
     final id = int.tryParse(parameters['id'] ?? '') ?? 0;
-    ProductService.shared.get_product(id: id)
-        .onError((error, stackTrace) {
+    ProductService.shared.get_product(id: id).onError((error, stackTrace) {
       Navigator.maybeOf(context)?.pushReplacementNamed('not-found');
-    })
-        .then((value) {
-      if(value == null) return;
+    }).then((value) {
+      if (value == null) return;
       _product = value;
       setState(() {
         isLoading = false;

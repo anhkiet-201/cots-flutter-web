@@ -24,74 +24,73 @@ class _OrderItemState extends State<OrderItem> {
   Widget build(BuildContext context) {
     final order = widget.order;
     return ExpansionTile(
-            expandedCrossAxisAlignment: CrossAxisAlignment.start,
-            childrenPadding:
-                const EdgeInsets.symmetric(horizontal: 50, vertical: 50),
-            onExpansionChanged: (isExpanded) {
-              if (isExpanded) _fetch();
-            },
-            title: Text(
-              '#${order.orderId}',
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            ),
-            subtitle: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Status: ${order.orderStatus}',
-                  style: const TextStyle(fontSize: 16),
-                ),
-                SpacerV(),
-                Row(
-                  children: [
-                    Text(
-                      DateFormat().add_MMMMEEEEd().format(DateTime.parse(
-                          order.paymentDate ?? DateTime.now().toString())),
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                    SpacerH(),
-                    if (_details.isNotEmpty)
-                      Text(
-                        '${_details.length} items',
-                        style: const TextStyle(fontSize: 12),
-                      )
-                  ],
-                )
-              ],
-            ),
+      expandedCrossAxisAlignment: CrossAxisAlignment.start,
+      childrenPadding: const EdgeInsets.symmetric(horizontal: 50, vertical: 50),
+      onExpansionChanged: (isExpanded) {
+        if (isExpanded) _fetch();
+      },
+      title: Text(
+        '#${order.orderId}',
+        style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+      ),
+      subtitle: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Status: ${order.orderStatus}',
+            style: const TextStyle(fontSize: 16),
+          ),
+          SpacerV(),
+          Row(
             children: [
-              _line(),
-              SpacerV(50),
-              _itemInfo(),
-              SpacerV(50),
-              _line(),
-              SpacerV(50),
-              _info(order),
-              SpacerV(50),
-              _line(),
-              SpacerV(50),
-              const Text(
-                'Need help?',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              Text(
+                DateFormat().add_MMMMEEEEd().format(DateTime.parse(
+                    order.paymentDate ?? DateTime.now().toString())),
+                style: const TextStyle(fontSize: 12),
               ),
-              SpacerV(10),
-              const Text(
-                'Contact us',
-                style: TextStyle(
-                  fontSize: 14,
-                ),
-              ),
+              SpacerH(),
+              if (_details.isNotEmpty)
+                Text(
+                  '${_details.length} items',
+                  style: const TextStyle(fontSize: 12),
+                )
             ],
-          );
+          )
+        ],
+      ),
+      children: [
+        _line(),
+        SpacerV(50),
+        _itemInfo(),
+        SpacerV(50),
+        _line(),
+        SpacerV(50),
+        _info(order),
+        SpacerV(50),
+        _line(),
+        SpacerV(50),
+        const Text(
+          'Need help?',
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        ),
+        SpacerV(10),
+        const Text(
+          'Contact us',
+          style: TextStyle(
+            fontSize: 14,
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _itemInfo() {
-    return _isLoading ? _skeleton() : Column(
-      children: [
-        ..._details.map((e) => _item(e)).toList()
-      ],
-    );
+    return _isLoading
+        ? _skeleton()
+        : Column(
+            children: [..._details.map((e) => _item(e)).toList()],
+          );
   }
 
   _fetch() async {

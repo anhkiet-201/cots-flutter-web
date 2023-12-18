@@ -1,4 +1,5 @@
 import 'dart:html';
+
 import 'package:cdio_web/api/model/BaseResponseModel.dart';
 import 'package:cdio_web/api/model/Category.dart';
 import 'package:cdio_web/api/model/Product.dart';
@@ -220,7 +221,9 @@ class _SearchState extends State<Search> {
     _updateUrl();
     ProductService.shared
         .list_product_info_homepage(
-            pageIndex: _currentPage, keyword: _search.text, categoryId: _categoryId)
+            pageIndex: _currentPage,
+            keyword: _search.text,
+            categoryId: _categoryId)
         .onError((error, stackTrace) {
       return Pageable.empty();
     }).then((value) {
